@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: inherit;
+}
+
+:root {
+    --dark-blue: rgb(22, 26, 48);
+    --bluish: rgb(49, 48, 77);
+    --gray: rgb(182, 187, 196);
+    --platinum: rgb(240, 236, 229);
+    --lavender: #f0ecff;
+    --ivory: #FBFFEC;
+}
+
+body {
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Space Mono', monospace;
+}
