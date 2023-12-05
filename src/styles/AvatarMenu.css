@@ -1,0 +1,24 @@
+
+.MuiMenu-paper {
+    translate: -0.5rem 3rem;
+    width: 50%;
+}
+
+@media (min-width: 500px) {
+    .MuiMenu-paper {
+        /* border: solid yellow 14px; */
+        background-color: aqua;
+        width: 11rem;
+    }
+}
+
+/* Add styling later if needed */
+.MuiMenu-paper ul li {
+    
+}
+
+/* Change the color later */
+.menu {
+    transition: ease-in;
+    background-color: hsla(0, 100%, 50%, 0.3);
+}

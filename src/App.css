@@ -8,3 +8,7 @@ html {
     justify-content: center;
     align-items: center;
 }
+
+.container-with-nav {
+    height: 100vh;
+}

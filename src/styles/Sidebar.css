@@ -1,0 +1,40 @@
+.sidebar-container {
+    outline: solid 3px green;
+    background-color: aqua;
+    z-index: 2;
+    height: 100%;
+    width: 75%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    animation-name: slideIn;
+    animation-timing-function: ease;
+    animation-duration: 0.4s;
+}
+
+@media (min-width: 500px) {
+    .sidebar-container {
+        width: 20rem;
+    }
+}
+
+
+.transparent-sheet {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: hsla(200, 10%, 10%, 0.3);
+    z-index: 1;
+}
+
+@keyframes slideIn {
+    from {
+        left: -300px;
+    }
+
+    to {
+        left: 0;
+    }
+}

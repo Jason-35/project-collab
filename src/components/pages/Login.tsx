@@ -6,24 +6,23 @@ import HighFive from "../../assets/high-five.svg"
 import "../../styles/Login.css"
 import { db } from "../../firebase/firebase"
 import { addDoc, collection } from "firebase/firestore"
+import { useNavigate } from "react-router-dom"
 
 const Login = () => {
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
     
     const onClick = () => {
         const provider = new GoogleAuthProvider()
         signInWithPopup(auth, provider).then(async (result) => {
             if(result){
-                // navigate("/home")
                 try {
-                    const docRef = await addDoc(collection(db, "users"), {
+                    await addDoc(collection(db, "users"), {
                         name: result.user.displayName
                     });
-                    console.log("document written with id ", docRef.id)
+                    navigate("/home")
                 } catch (error) {
-                    console.log(error)
+                    console.log("ERROR IN LOGIN PAGE",error)
                 }
-                console.log("you got results")
             }    
         })
     }
