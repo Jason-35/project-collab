@@ -1,0 +1,55 @@
+.profile-setup {
+    /* position: relative; */
+}
+
+.card {
+    position: absolute;
+    outline: 3px solid green;
+    height: 50%;
+    width: 50%;
+    background-color: aqua;
+    transition: left 1s ease-in-out, right 1s ease-in-out;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+.out-of-view {
+    right: -200%;
+}
+
+.slide-out {
+    /* transform: translateX(-300%); */
+    left: -300%;
+}
+
+.slide-in {
+    /* transform: translateX(90%); */
+    right: 0;
+}
+
+#welcome-card {
+    z-index: 5;
+}
+
+#avatar-card {
+    z-index: 4;
+}
+
+#level-card {
+    z-index: 3;
+}
+
+#skills-card {
+    z-index: 2;
+}
+
+#bio-card {
+    z-index: 1;
+}
+
+#finish {
+    z-index: 0
+}

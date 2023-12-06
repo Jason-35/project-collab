@@ -19,7 +19,7 @@ const Login = () => {
                     await addDoc(collection(db, "users"), {
                         name: result.user.displayName
                     });
-                    navigate("/home")
+                    navigate("/profile-setup")
                 } catch (error) {
                     console.log("ERROR IN LOGIN PAGE",error)
                 }
