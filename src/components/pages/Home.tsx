@@ -8,9 +8,19 @@ import Activity from "../Activity";
 import { useState } from "react";
 import BottomBar from "../BottomBar";
 
+interface MobilePage {
+    [key: string]: JSX.Element;
+}
 const Home = () => {
     const [width, setWidth] = useState(window.innerWidth)
+    const [pageType, setPageType] = useState<string>("recommend")
     const navigate = useNavigate()
+
+    const mobilePage: MobilePage = {
+        "home" : <RecommendedProjects />,
+        "friends" : <Friends />,
+        "activity" : <Activity />
+    }
     
     auth.onAuthStateChanged((user) => {
         if(!user){
@@ -30,8 +40,9 @@ const Home = () => {
             
             <NavigationBar />
             <SideBar />
-            
-            <BottomBar />
+
+            {mobilePage[pageType]}
+            <BottomBar setPageType={setPageType}/>
         </div>
         )
     }else{
@@ -40,7 +51,6 @@ const Home = () => {
                 <NavigationBar />
                 <SideBar />
                 <div>
-                    {width}
                     <div>
                         <RecommendedProjects />
                     </div>

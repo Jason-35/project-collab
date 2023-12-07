@@ -47,9 +47,8 @@
 
 .dashboard:hover {
     cursor: pointer;
-    outline: 1px solid green;
-    border-radius: 5px;
-    background-color: gray;
+    border: none;
+    text-decoration: underline  ;
 }
 
 .dashboard-link {

@@ -47,7 +47,7 @@ const SideBar = () => {
                         </li>
                         <li onClick={() => {navigate("/home")}}>
                             <span className="list-icons"><UserPlus /></span>
-                            <span>Create Group</span>
+                            <span>Create Project Group</span>
                         </li>
                     </ul>
 

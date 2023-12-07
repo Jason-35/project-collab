@@ -3,12 +3,14 @@ import { auth } from "../firebase/firebase";
 import { MenuIcon } from "lucide-react";
 import UserAvatar from "./UserAvatar";
 import { useOpenSidebar } from "../lib/hooks/sidebar-hook";
+import { useNavigate } from "react-router-dom";
 
 
 
 const NavigationBar = () => {
 
     const {openSidebar, setOpenSidebar} = useOpenSidebar()
+    const navigate = useNavigate()
 
 
     let username = ""
@@ -26,7 +28,7 @@ const NavigationBar = () => {
         <div className="navigation-items">
             <div className="navigation-items-list">
                 <div onClick={handleSidebar} className="menu-icon"><MenuIcon/></div>
-                <div className="dashboard"><a className="dashboard-link" href="http://localhost:3000/home">Dashboard</a></div>
+                <div className="dashboard"><a className="dashboard-link" onClick={() => navigate("/home")}>Dashboard</a></div>
             </div>
             <div>
                 <UserAvatar width={40} height={40} />

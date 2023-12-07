@@ -19,9 +19,9 @@
 
 @media (min-width: 1000px) {
     .card {
-        background-color: black;
-        height: 50%;
-        width: 50%;
+        background-color: greenyellow;
+        /* height: 50%; */
+        width: 30%;
     }
 }
 
@@ -110,10 +110,11 @@
 .skillbox-container {
     display: flex;
     justify-content: center;
+    /* border: none; */
 }
 
 .skillbox {
-    outline: solid green 1px;
+    /* outline: solid green 1px; */
     width: 200px;
     height: 300px;
     margin-top: -5rem;

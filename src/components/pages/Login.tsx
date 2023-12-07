@@ -5,7 +5,7 @@ import { ReactSVG } from "react-svg"
 import HighFive from "../../assets/high-five.svg"
 import "../../styles/Login.css"
 import { db } from "../../firebase/firebase"
-import { addDoc, collection } from "firebase/firestore"
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore"
 import { useNavigate } from "react-router-dom"
 
 const Login = () => {
@@ -16,10 +16,24 @@ const Login = () => {
         signInWithPopup(auth, provider).then(async (result) => {
             if(result){
                 try {
-                    await addDoc(collection(db, "users"), {
-                        name: result.user.displayName
-                    });
-                    navigate("/profile-setup")
+                    
+                    const userCollection = query(collection(db, "users"), where("name", "==", result.user.displayName))
+                    const userArray = await getDocs(userCollection);
+
+                    let user = ""
+                    userArray.forEach((doc) => {
+                        user = doc.data().name
+                    })
+
+                    if(user){
+                        navigate("/profile-setup")
+                    }else{
+                        await addDoc(collection(db, "users"), {
+                            name: result.user.displayName
+                        });
+                        navigate("/profile-setup")
+                    }
+
                 } catch (error) {
                     console.log("ERROR IN LOGIN PAGE",error)
                 }

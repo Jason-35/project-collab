@@ -2,7 +2,7 @@ import { Activity, CircleUserRound, Home } from "lucide-react";
 import "../styles/BottomBar.css"
 import { useState } from "react";
 
-const BottomBar = () => {
+const BottomBar = ({setPageType} : {setPageType: React.Dispatch<React.SetStateAction<string>>}) => {
     const [active, setActive] = useState("home")
 
     
@@ -11,7 +11,12 @@ const BottomBar = () => {
     }
 
     const getIconStrokeWidth = (id: string) => {
-        return active === id ? 3 : 2
+        if(active === id){
+            setPageType(id)
+            return 3
+        }else {
+            return 2
+        }
     }
     
     

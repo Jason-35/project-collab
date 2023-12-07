@@ -8,6 +8,10 @@ import { useNavigate } from "react-router-dom"
 import { Autocomplete, TextField } from "@mui/material"
 import KittyWrite from "../../assets/kitty-write.png"
 import jsonData from "../../assets/skills.json"
+import { query, collection, where, getDocs, updateDoc, doc, QueryDocumentSnapshot, DocumentData } from "firebase/firestore"
+import { db, storage } from "../../firebase/firebase"
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
+import { v4 as uuid } from "uuid";
 
 const ProfileSetup = () => {
 
@@ -20,12 +24,14 @@ const ProfileSetup = () => {
     const input = useRef<HTMLInputElement>(null)
 
     const [img, setImg] = useState("")
-    const [active, setActive] = useState("beginner")
-    const [bioText, setBioText] = useState("") 
+    const [skillLevel, setSkillLevel] = useState("beginner")
     const [skills, setSkills ] = useState<string[]>([])
+    const [bioText, setBioText] = useState("") 
+    const [imgFile, setImgFile] = useState<File | null>(null)
 
     const navigate = useNavigate()
     const auth = getAuth()
+
 
        
     auth.onAuthStateChanged((user) => {
@@ -107,6 +113,7 @@ const ProfileSetup = () => {
     const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
         if(event.target.files){
             const file = (event.target.files[0])
+            setImgFile(file)
             const reader = new FileReader()
 
             reader.onload = (e) => {
@@ -114,20 +121,20 @@ const ProfileSetup = () => {
                 if (typeof result === 'string') {
                   setImg(result);
                 }
-                console.log(result)
             };
 
             reader.readAsDataURL(file)
+
         }
 
     }
 
     const handleLevelSelect = (level: string) => {
-        setActive(level)
+        setSkillLevel(level)
     }
 
     const isSelected = (id: string) => {
-        return active === id ? "selected" : "not-selected"  
+        return skillLevel === id ? "selected" : "not-selected"  
     }
 
     const handleBioChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -145,6 +152,47 @@ const ProfileSetup = () => {
         console.log(skillIndex, skills)
         skills.splice(skillIndex, 1)
         setSkills((prevSkill) => [...prevSkill])
+    }
+
+    const handleDone = async() => {
+        console.log("run")
+        let documnet : QueryDocumentSnapshot<DocumentData, DocumentData>;
+        if(auth.currentUser){
+            const userCollection = query(collection(db, "users"), where("name", "==", auth.currentUser.displayName))
+            await getDocs(userCollection).then((obj) => {
+                obj.forEach((doc) => {
+                    documnet = doc
+                })
+            })
+            .then(async () => { 
+                await updateDoc(doc(db, "users", documnet.id), {
+                    bio: bioText,
+                    level: skillLevel,
+                    skills: skills,
+                    finishSetup: true,
+
+                })
+            });
+
+            const uid = uuid()
+            const storageRef = ref(storage, `avatar/${uid}`)
+            if(imgFile){
+                uploadBytes(storageRef, imgFile).then(async() => {
+                    getDownloadURL(storageRef).then(async(url) => {
+                        
+                        await updateDoc(doc(db, "users", documnet.id), {
+                            imgUrl: url
+                        }).then(() => {
+                            
+                        })
+                    })
+                })
+            }
+
+            navigate("/home")
+
+        }
+    
     }
 
     return ( 
@@ -206,7 +254,7 @@ const ProfileSetup = () => {
                     <Autocomplete
                         disablePortal
                         options={jsonData}
-                        sx={{ width: 300 }}
+                        sx={{ width: 300, backgroundColor: "white"}}
                         renderInput={({ inputProps, ...rest}) => <TextField {...rest} inputProps={{...inputProps, readOnly:true}}/>}
                         onChange={handleSelectedSkill}
                     />
@@ -242,7 +290,7 @@ const ProfileSetup = () => {
                     <img src={Cool} alt="" />
                 </div>
                 <div className="card-btn">
-                    <button className="next-btn" onClick={() => {navigate("/home")}}>Find Some Projects!</button>
+                    <button className="next-btn" onClick={handleDone}>Find Some Projects!</button>
                 </div>
             </div>
         </div>
