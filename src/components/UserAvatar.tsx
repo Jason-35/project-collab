@@ -5,7 +5,7 @@ import { CircleUser, LogOut } from "lucide-react";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 
-const UserAvatar = () => {
+const UserAvatar = ({width, height} : {width: number, height: number}) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -25,7 +25,7 @@ const UserAvatar = () => {
             onClick={handleClick}
             size="small"
         >
-            <Avatar sx={{ width: 40, height: 40 }} src="">jm</Avatar>
+            <Avatar sx={{ width: width, height: height }} src="">jm</Avatar>
         </IconButton>
 
         <Menu 

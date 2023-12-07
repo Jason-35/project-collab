@@ -29,7 +29,7 @@ const NavigationBar = () => {
                 <div className="dashboard"><a className="dashboard-link" href="http://localhost:3000/home">Dashboard</a></div>
             </div>
             <div>
-                <UserAvatar />
+                <UserAvatar width={40} height={40} />
             </div>
         </div>
     </div>
