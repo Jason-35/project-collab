@@ -4,9 +4,12 @@ import CatLogo from '../assets/kitty.png'
 import { Bell, Bug, Home, MoreVertical, Search, UserPlus, Users, X } from "lucide-react";
 import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import CreateProjectModal from "./CreateProjectModal";
+import { useState } from "react";
 
 const SideBar = () => {
     const { openSidebar, setOpenSidebar } = useOpenSidebar()
+    const [open, setOpen] = useState(false)
 
     const navigate = useNavigate()
 
@@ -15,6 +18,7 @@ const SideBar = () => {
         const elementClass = clickedElement.classList.value
         if(elementClass === "transparent-sheet"){
             setOpenSidebar(false)
+            setOpen(false)
         }
     } 
 
@@ -45,11 +49,12 @@ const SideBar = () => {
                             <span className="list-icons"><Bug /></span>
                             <span>Issues</span>
                         </li>
-                        <li onClick={() => {navigate("/home")}}>
+                        <li onClick={() => {setOpen(true)}}>
                             <span className="list-icons"><UserPlus /></span>
                             <span>Create Project Group</span>
                         </li>
                     </ul>
+                        <CreateProjectModal open={open} setOpen={setOpen}/>
 
                         <div className="sidebar-divider-container">
                             <Divider className="sidebar-divider"/>

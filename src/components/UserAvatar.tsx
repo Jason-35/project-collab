@@ -1,5 +1,5 @@
 import { Avatar, IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material"
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "../styles/AvatarMenu.css"
 import { CircleUser, LogOut } from "lucide-react";
 import { signOut } from "firebase/auth";
@@ -14,24 +14,18 @@ const UserAvatar = ({width, height} : {width: number, height: number}) => {
         setAnchorEl(event.currentTarget);
     };
 
+    auth.onAuthStateChanged(async(user)=>{
+        if(user){
+            const userCollection = query(collection(db, "users"), where("name", "==", user.displayName))
+            const userArray = await getDocs(userCollection);
 
-    useEffect(() => {
-        const getImgUrl = async() => {
-            if(auth.currentUser){
-                console.log("yip")
-                const userCollection = query(collection(db, "users"), where("name", "==", auth.currentUser.displayName))
-                const userArray = await getDocs(userCollection);
-
-                userArray.forEach((doc) => {
-                   setImgUrl(doc.data().imgUrl)
+            userArray.forEach((doc) => {
+                setImgUrl(doc.data().imgUrl)
                    
-                })
-            }
+            })
         }
+    })
 
-        getImgUrl()
-        
-    }, [])
     
     const handleClose = () => {
         setAnchorEl(null);

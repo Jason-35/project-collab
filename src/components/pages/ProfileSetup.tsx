@@ -155,7 +155,6 @@ const ProfileSetup = () => {
     }
 
     const handleDone = async() => {
-        console.log("run")
         let documnet : QueryDocumentSnapshot<DocumentData, DocumentData>;
         if(auth.currentUser){
             const userCollection = query(collection(db, "users"), where("name", "==", auth.currentUser.displayName))
