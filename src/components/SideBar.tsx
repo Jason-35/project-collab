@@ -33,23 +33,37 @@ const SideBar = () => {
                     </div>
                     
                     <ul className="sidebar-list">
-                        <li onClick={() => {navigate("/home")}}>
+                        <li onClick={() => {
+                            setOpenSidebar(false)
+                            navigate("/home")
+                            }}>
                             <span className="list-icons"><Home/></span>
                             <span>Home</span>
                         </li>
-                        <li onClick={() => {navigate("/explore")}}>
+                        <li onClick={() => {
+                            setOpenSidebar(false)
+                            navigate("/explore")
+                            }}>
                             <span className="list-icons"><Search/></span>
                             <span>Explore</span>
                         </li>
-                        <li onClick={() => {navigate("/home")}}>
+                        <li onClick={() => {
+                            setOpenSidebar(false)
+                            navigate("/home")
+                            }}>
                             <span className="list-icons"><Bell/></span>
                             <span>Notification</span>
                         </li>
-                        <li onClick={() => {navigate("/issues")}}>
+                        <li onClick={() => {
+                            setOpenSidebar(false)
+                            navigate("/issues")
+                            }}>
                             <span className="list-icons"><Bug /></span>
                             <span>Issues</span>
                         </li>
-                        <li onClick={() => {setOpen(true)}}>
+                        <li onClick={() => {
+                            setOpen(true)
+                            }}>
                             <span className="list-icons"><UserPlus /></span>
                             <span>Create Project Group</span>
                         </li>

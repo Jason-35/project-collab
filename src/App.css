@@ -8,3 +8,16 @@
 .container-with-nav {
     height: 100vh;
 }
+
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.center {
+    justify-content: center;
+    align-items: center;
+}
