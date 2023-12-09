@@ -20,6 +20,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/explore' element={<Explore />} />
           <Route path='/issues' element={<Issues />} />
+          <Route path='/project/:randomString' element={<div>project details here!</div>} />
         </Routes>
       </BrowserRouter>
     </SidebarProvider>
