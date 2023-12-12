@@ -13,6 +13,7 @@ const Explore = () => {
 
     useEffect(() => {
         const fetchData = async() => {
+            console.log("fetch!")
             const querySnapshot = query(collection(db, "group"))
             await getDocs(querySnapshot).then((data) => {
                 setProjects(data.docs.map(doc => doc.data()))

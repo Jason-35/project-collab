@@ -55,6 +55,7 @@ const Home = () => {
                         <RecommendedProjects />
                     </div>
                     <div>
+                        ----------------
                         <Friends />
                         <Activity />
                     </div>

@@ -1,9 +1,9 @@
-import BottomBar from "../BottomBar";
 
 const Issues = () => {
     return ( 
     <div>
-        <BottomBar />
+        {/* <BottomBar /> */}
+        asd
     </div> );
 }
  
