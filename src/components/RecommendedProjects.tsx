@@ -13,7 +13,6 @@ const RecommendedProjects = () => {
                 const docs = await getDocs(userQuery)
                 const level = docs.docs[0].data().level
 
-  
                 console.log(level)
                 const levelQuery = query(collection(db, "group"), where("group.level", "==", level))
                 const levelDocs = await getDocs(levelQuery)
@@ -25,10 +24,9 @@ const RecommendedProjects = () => {
 
 
         if(recommend.length < 1){
-            console.log("run")
             fetchData()
         }
-    })
+    }, [recommend.length])
 
     return ( 
     <div>

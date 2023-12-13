@@ -19,19 +19,21 @@ const Login = () => {
                     
                     const userCollection = query(collection(db, "users"), where("name", "==", result.user.displayName))
                     const userArray = await getDocs(userCollection);
-
-                    const user = userArray.docs[0].data().name
-                    const setup = userArray.docs[0].data().finishSetup
-
-                    if(user && setup){
-                        navigate("/home")
-                    }else if (user && !setup){
-                        navigate("/profile-setup")
-                    }else{
+                    if(!userArray.docs[0]){
                         await addDoc(collection(db, "users"), {
                             name: result.user.displayName
                         });
                         navigate("/profile-setup")
+                    } else {
+                        const user = userArray.docs[0].data().name
+                        const setup = userArray.docs[0].data().finishSetup
+    
+                        if(user && setup){
+                            navigate("/home")
+                        }else if (user && !setup){
+                            navigate("/profile-setup")
+                        }
+
                     }
 
                 } catch (error) {

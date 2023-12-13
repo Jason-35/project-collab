@@ -7,6 +7,7 @@ import { SidebarProvider } from './context/SidebarContext';
 import Explore from './components/pages/Explore';
 import Issues from './components/pages/Issues';
 import ProfileSetup from './components/pages/ProfileSetup';
+import ProjectLayout from './components/pages/ProjectLayout';
 function App() {
   
   return (
@@ -20,7 +21,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/explore' element={<Explore />} />
           <Route path='/issues' element={<Issues />} />
-          <Route path='/project/:randomString' element={<div>project details here!</div>} />
+          <Route path='/project/:name/:uuid' element={<ProjectLayout />} />
         </Routes>
       </BrowserRouter>
     </SidebarProvider>

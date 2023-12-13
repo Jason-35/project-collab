@@ -4,16 +4,15 @@ import { db } from "../../firebase/firebase";
 import NavigationBar from "../NavigationBar";
 import SideBar from "../SideBar";
 import "../../styles/Explore.css"
-import { useNavigate } from "react-router-dom";
+import RequestToJoinModal from "../RequestToJoinModal";
 
 const Explore = () => {
     const [projects, setProjects] = useState<DocumentData>([])
-
-    const navigate = useNavigate()
+    const [openModal, setOpenModal] = useState(false)
+    const [selectedProj, setSelectedProj] = useState<DocumentData | null>(null)
 
     useEffect(() => {
         const fetchData = async() => {
-            console.log("fetch!")
             const querySnapshot = query(collection(db, "group"))
             await getDocs(querySnapshot).then((data) => {
                 setProjects(data.docs.map(doc => doc.data()))
@@ -22,6 +21,13 @@ const Explore = () => {
 
         fetchData()
     }, [])
+
+    const handleRequestToJoin = ( proj: DocumentData) => {
+        console.log("I WANT TO JOIN!")
+        console.log(proj.group.projectName)
+        setSelectedProj(proj)
+        setOpenModal(true)
+    }
 
     return (
     <div className="container-with-nav">
@@ -36,12 +42,23 @@ const Explore = () => {
         </div>
 
         {projects.map((proj: DocumentData, index: number) => (
-            <div className="searchCard" onClick={() => {navigate(proj.url)}} key={index}>
+            <div className="searchCard" onClick={() => handleRequestToJoin(proj)} key={index}>
+                <div>
                 {proj.group.projectName} 
                 <br /> owner: {proj.owner}
                 <br /> 0 / {proj.group.max}
+                <br /> {proj.group.level}
+                <br /> 
+                </div>
+                <div>
+                    {proj.group.tags.map((skill:string, index:number) => (
+                        <div key={index}>{skill}</div>
+                    ))}
+                </div>
             </div>
         ))}
+
+        <RequestToJoinModal openModal={openModal} setOpenModal={setOpenModal} selectedProj={selectedProj} />
 
     </div> 
     );

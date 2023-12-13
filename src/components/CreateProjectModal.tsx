@@ -63,7 +63,7 @@ const CreateProjectModal = ({open, setOpen} : CreateProjectProps) => {
         formData.max = Number(formData.max)
         
         const uid = uuid()
-        formData.url = `/project/${uid}`
+        formData.url = `/project/${formData.projectName}/${uid}`
         
         let documnet : QueryDocumentSnapshot<DocumentData, DocumentData>;
         if(auth.currentUser){
