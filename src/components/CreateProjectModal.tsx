@@ -1,7 +1,7 @@
 import { Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent, TextField, useMediaQuery, useTheme } from "@mui/material";
 import React, { ChangeEvent, useState } from "react";
 import { auth, db } from "../firebase/firebase";
-import { query, collection, where, DocumentData, QueryDocumentSnapshot, doc, getDocs, updateDoc, addDoc, arrayUnion } from "firebase/firestore";
+import { query, collection, where, DocumentData, QueryDocumentSnapshot, doc, getDocs, updateDoc, arrayUnion, setDoc } from "firebase/firestore";
 import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
 
@@ -79,7 +79,7 @@ const CreateProjectModal = ({open, setOpen} : CreateProjectProps) => {
                 })
             });
 
-            await addDoc(collection(db, "group"), {
+            await setDoc(doc(db, "group", uid), {
                 owner: auth.currentUser.displayName,
                 url: formData.url,
                 group: formData

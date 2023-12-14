@@ -6,6 +6,7 @@ import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CreateProjectModal from "./CreateProjectModal";
 import { useState } from "react";
+import NotificationModal from "./NotificationModal";
 
 const SideBar = () => {
     const { openSidebar, setOpenSidebar } = useOpenSidebar()
@@ -26,6 +27,7 @@ const SideBar = () => {
     if(openSidebar){
         showSidebar = (
             <div onClick={handleCloseSidebar} className="transparent-sheet">
+                <NotificationModal />
                 <div className="sidebar-container">
                     <div className="sidebar-header">
                         <span className="sidebar-logo"><img src={CatLogo} width={"32px"} height={"32px"}/></span>
@@ -49,7 +51,6 @@ const SideBar = () => {
                         </li>
                         <li onClick={() => {
                             setOpenSidebar(false)
-                            navigate("/home")
                             }}>
                             <span className="list-icons"><Bell/></span>
                             <span>Notification</span>
