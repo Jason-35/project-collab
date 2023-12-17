@@ -9,7 +9,7 @@ interface Props {
     setOpenSidebar: Dispatch<SetStateAction<boolean>>;
   }
 
- export const SidebarContext = createContext<SidebarContextProps>({openSidebar: false, setOpenSidebar: () => {}})
+export const SidebarContext = createContext<SidebarContextProps>({openSidebar: false, setOpenSidebar: () => {}})
 
 export const SidebarProvider: React.FC<Props> = ({children}) => {
     const [openSidebar, setOpenSidebar] = useState(false)

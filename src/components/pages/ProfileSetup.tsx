@@ -3,15 +3,16 @@ import KittyComp from "../../assets/kitty-computer-256.png"
 import Cool from "../../assets/cool.png"
 import { ChangeEvent, SyntheticEvent, useRef, useState } from "react"
 import Avatar from "react-avatar"
-import { getAuth } from "firebase/auth"
 import { useNavigate } from "react-router-dom"
 import { Autocomplete, TextField } from "@mui/material"
 import KittyWrite from "../../assets/kitty-write.png"
 import jsonData from "../../assets/skills.json"
-import { query, collection, where, getDocs, updateDoc, doc, QueryDocumentSnapshot, DocumentData } from "firebase/firestore"
-import { db, storage } from "../../firebase/firebase"
+import { updateDoc, doc } from "firebase/firestore"
+import { auth, db, storage } from "../../firebase/firebase"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 import { v4 as uuid } from "uuid";
+import { getCurrentUserUid } from "../../lib/service/UserService"
+import { UserSetup } from "../../constants/constant"
 
 const ProfileSetup = () => {
 
@@ -30,9 +31,6 @@ const ProfileSetup = () => {
     const [imgFile, setImgFile] = useState<File | null>(null)
 
     const navigate = useNavigate()
-    const auth = getAuth()
-
-
        
     auth.onAuthStateChanged((user) => {
         if(!user){
@@ -92,7 +90,6 @@ const ProfileSetup = () => {
     }
 
     const handleBio = () => {
-        // save the text into the database
         console.log(bioText)
         if(bio.current){
             bio.current.className = bio.current.className + " slide-out"
@@ -155,43 +152,31 @@ const ProfileSetup = () => {
     }
 
     const handleDone = async() => {
-        let documnet : QueryDocumentSnapshot<DocumentData, DocumentData>;
-        if(auth.currentUser){
-            const userCollection = query(collection(db, "users"), where("name", "==", auth.currentUser.displayName))
-            await getDocs(userCollection).then((obj) => {
-                obj.forEach((doc) => {
-                    documnet = doc
-                })
-            })
-            .then(async () => { 
-                await updateDoc(doc(db, "users", documnet.id), {
-                    bio: bioText,
-                    level: skillLevel,
-                    skills: skills,
-                    finishSetup: true,
+        let imgUrl = ""
+        const uid = uuid()
+        const storageRef = ref(storage, `avatar/${uid}`)
+        if(imgFile){
+            await uploadBytes(storageRef, imgFile)
+            imgUrl = await getDownloadURL(storageRef)
+        }
 
-                })
-            });
-
-            const uid = uuid()
-            const storageRef = ref(storage, `avatar/${uid}`)
-            if(imgFile){
-                uploadBytes(storageRef, imgFile).then(async() => {
-                    getDownloadURL(storageRef).then(async(url) => {
-                        
-                        await updateDoc(doc(db, "users", documnet.id), {
-                            imgUrl: url
-                        }).then(() => {
-                            
-                        })
-                    })
-                })
-            }
-
-            navigate("/home")
+        const profileObject = {
+            imgUrl: imgUrl,
+            bio: bioText,
+            level: skillLevel,
+            skills: skills,
+            profileSetup: true,
+            ...UserSetup
 
         }
-    
+
+        try {
+            await updateDoc(doc(db, "users", getCurrentUserUid()), profileObject)
+        } catch (error) {
+            console.log("ERROR UPDATING PROFILE SETUP ", error)
+        }
+
+        navigate("/home")
     }
 
     return ( 

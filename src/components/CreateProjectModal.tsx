@@ -1,9 +1,10 @@
 import { Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, OutlinedInput, Select, SelectChangeEvent, TextField, useMediaQuery, useTheme } from "@mui/material";
 import React, { ChangeEvent, useState } from "react";
-import { auth, db } from "../firebase/firebase";
-import { query, collection, where, DocumentData, QueryDocumentSnapshot, doc, getDocs, updateDoc, arrayUnion, setDoc } from "firebase/firestore";
+import { db } from "../firebase/firebase";
+import { arrayUnion, doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
+import { getCurrentDisplayName, getCurrentUserUid, updateCurrentUserDocument } from "../lib/service/UserService";
 
 interface CreateProjectProps {
     open: boolean;
@@ -36,7 +37,6 @@ interface FormData {
 }
 
 const CreateProjectModal = ({open, setOpen} : CreateProjectProps) => {
-
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState<FormData>({
@@ -58,38 +58,8 @@ const CreateProjectModal = ({open, setOpen} : CreateProjectProps) => {
     };
 
 
-    const handleSubmit = async(e: ChangeEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        formData.max = Number(formData.max)
-        
-        const uid = uuid()
-        formData.url = `/project/${formData.projectName}/${uid}`
-        
-        let documnet : QueryDocumentSnapshot<DocumentData, DocumentData>;
-        if(auth.currentUser){
-            const userCollection = query(collection(db, "users"), where("name", "==", auth.currentUser.displayName))
-            await getDocs(userCollection).then((obj) => {
-                obj.forEach((doc) => {
-                    documnet = doc
-                })
-            })
-            .then(async () => { 
-                await updateDoc(doc(db, "users", documnet.id), {
-                    group: arrayUnion(formData)
-                })
-            });
-
-            await setDoc(doc(db, "group", uid), {
-                owner: auth.currentUser.displayName,
-                url: formData.url,
-                group: formData
-            });
-        }
-
-        navigate(`${formData.url}`)
-    }
-
-
+    
+    
     const handleChangeTag = (event: SelectChangeEvent<string[]>) => {
         const { name, value } = event.target;
         setFormData({
@@ -98,7 +68,7 @@ const CreateProjectModal = ({open, setOpen} : CreateProjectProps) => {
         })
 
     };
-
+    
     const handleFormInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({
@@ -110,12 +80,40 @@ const CreateProjectModal = ({open, setOpen} : CreateProjectProps) => {
       const handleFormSelectChange = (e: SelectChangeEvent<string>) => {
         const { name, value } = e.target;
         setFormData({
-          ...formData,
+            ...formData,
           [name]: value,
         });
-      };
+    };
     
+    const handleSubmit = async(e: ChangeEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        formData.max = Number(formData.max)
+        
+        const uid = uuid()
+        const userDisplayName = getCurrentDisplayName()
+        const userId = getCurrentUserUid()
+        formData.url = `/project/${uid}`
+        
+        await setDoc(doc(db, "projectGroup", uid), {
+            owner: userDisplayName,
+            ownerId: userId,
+            url: formData.url,
+            projectData: formData,
+            members: [userDisplayName],
+            createdAt: serverTimestamp()
+        });
+        
+        await updateCurrentUserDocument({
+            memberOfProject: arrayUnion({
+                projectName: formData.projectName,
+                projectUrl: formData.url
+            })
+        })
 
+        navigate(`${formData.url}`)
+    }
+
+    
     return (
     <React.Fragment>
       <Dialog

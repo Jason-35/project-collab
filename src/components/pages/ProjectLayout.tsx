@@ -1,22 +1,47 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-import { db } from "../../firebase/firebase";
-import { query, collection, limit } from "firebase/firestore";
+import { auth, db } from "../../firebase/firebase";
+import { query, collection, limit, DocumentData, addDoc } from "firebase/firestore";
+import { useState } from "react";
+import { getUser } from "../../lib/service/UserService";
 
 const ProjectLayout = () => {
 
     const { uuid, name } = useParams()
 
-    // const messageRef = db.collection("messages")
     const messageRef = query(collection(db, "messages"), limit(10))
 
     const [messages] = useCollectionData(messageRef)
 
-    console.log(name, uuid)
-    console.log(messages)
+    const [msg, setMsg] = useState("")
+
+    const navigate = useNavigate()
+
+    auth.onAuthStateChanged((user) => {
+        if(!user){
+            navigate("/login")
+        }
+    })
+
+    const handleSend = async() => {
+        await addDoc(collection(db, "messages"), {
+            message: msg
+        })
+    }
+
     return ( 
-        <div>start of a new project {messages && (messages.length > 0) && messages[0].message}</div>
+        <div>
+            <div>service assignment</div>
+            <div>Bug tracker</div>
+            {(messages && messages.length > 0) && messages?.map((msg: DocumentData) => (
+                <div>{msg.message}</div>
+            ))}
+            
+                <input onChange={(e) => setMsg(e.target.value)} type="text" />
+                <button onClick={handleSend}>send</button>
+
+        </div>
      );
 }
  

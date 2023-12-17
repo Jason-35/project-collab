@@ -12,6 +12,13 @@ interface MobilePage {
     [key: string]: JSX.Element;
 }
 const Home = () => {
+
+    auth.onAuthStateChanged((user) => {
+        if(!user){
+            navigate("/login")
+        }
+    })
+
     const [width, setWidth] = useState(window.innerWidth)
     const [pageType, setPageType] = useState<string>("recommend")
     const navigate = useNavigate()
@@ -22,11 +29,6 @@ const Home = () => {
         "activity" : <Activity />
     }
     
-    auth.onAuthStateChanged((user) => {
-        if(!user){
-            navigate("/login")
-        }
-    })
 
     window.addEventListener('resize', () => {
         setWidth(window.innerWidth)

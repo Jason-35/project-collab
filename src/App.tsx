@@ -8,6 +8,7 @@ import Explore from './components/pages/Explore';
 import Issues from './components/pages/Issues';
 import ProfileSetup from './components/pages/ProfileSetup';
 import ProjectLayout from './components/pages/ProjectLayout';
+import Notification from './components/pages/Notification';
 function App() {
   
   return (
@@ -21,7 +22,8 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/explore' element={<Explore />} />
           <Route path='/issues' element={<Issues />} />
-          <Route path='/project/:name/:uuid' element={<ProjectLayout />} />
+          <Route path='/project/:uuid' element={<ProjectLayout />} />
+          <Route path='/notifications' element={<Notification />}/>
         </Routes>
       </BrowserRouter>
     </SidebarProvider>

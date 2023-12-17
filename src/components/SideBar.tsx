@@ -1,18 +1,34 @@
 import { useOpenSidebar } from "../lib/hooks/sidebar-hook";
 import "../styles/Sidebar.css"
 import CatLogo from '../assets/kitty.png'
-import { Bell, Bug, Home, MoreVertical, Search, UserPlus, Users, X } from "lucide-react";
+import { Bell, Bug, Home, Search, UserPlus, Users, X } from "lucide-react";
 import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CreateProjectModal from "./CreateProjectModal";
-import { useState } from "react";
-import NotificationModal from "./NotificationModal";
+import { useEffect, useState } from "react";
+import { getCurrentUserDocument } from "../lib/service/UserService";
+
+interface projObject {
+    projectName: string,
+    projectUrl: string,
+}
 
 const SideBar = () => {
     const { openSidebar, setOpenSidebar } = useOpenSidebar()
     const [open, setOpen] = useState(false)
+    const [listProj, setListProj] = useState<projObject[]>([])
 
     const navigate = useNavigate()
+
+    useEffect(()=>{
+        const fetchProjects = async() =>{
+            const currentUser = await getCurrentUserDocument()
+            if(currentUser && currentUser.memberOfProject.length > 0){
+                setListProj(currentUser.memberOfProject)
+            }
+        }
+        fetchProjects()
+    }, [])
 
     const handleCloseSidebar = (event: React.MouseEvent) => {
         const clickedElement = event.target as HTMLElement
@@ -27,7 +43,6 @@ const SideBar = () => {
     if(openSidebar){
         showSidebar = (
             <div onClick={handleCloseSidebar} className="transparent-sheet">
-                <NotificationModal />
                 <div className="sidebar-container">
                     <div className="sidebar-header">
                         <span className="sidebar-logo"><img src={CatLogo} width={"32px"} height={"32px"}/></span>
@@ -51,6 +66,7 @@ const SideBar = () => {
                         </li>
                         <li onClick={() => {
                             setOpenSidebar(false)
+                            navigate("/notifications")
                             }}>
                             <span className="list-icons"><Bell/></span>
                             <span>Notification</span>
@@ -75,23 +91,19 @@ const SideBar = () => {
                             <Divider className="sidebar-divider"/>
                         </div>
 
-                    <ul>
-                        <li className="group-project-section">
-                            <span><Users /></span>
-                            <span>Project Group</span>
-                        </li>
-                        <li>
-                            <span>Project 1</span>
-                            <span><MoreVertical /></span>
-                        </li>
-                        <li>
-                            <span>Project 2</span>
-                            <span><MoreVertical /></span>
-                        </li>
-                        <li>
-                            <span>Project 3</span>
-                            <span><MoreVertical />  </span>
-                        </li>
+                    <div className="group-project-header">
+                        <span><Users /></span>
+                        <span>Project Group</span>
+                    </div>
+
+                    <ul className="group-section">
+                        {listProj && (listProj.length > 0) && listProj.map((proj) => (
+                            <li>
+                                <span onClick={() => navigate(proj.projectUrl)}>
+                                    {proj.projectName}
+                                </span>
+                            </li>
+                        )) }
                     </ul>
 
                 </div>

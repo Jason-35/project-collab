@@ -5,8 +5,9 @@ import { ReactSVG } from "react-svg"
 import HighFive from "../../assets/high-five.svg"
 import "../../styles/Login.css"
 import { db } from "../../firebase/firebase"
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore"
+import { doc, setDoc } from "firebase/firestore"
 import { useNavigate } from "react-router-dom"
+import { getCurrentUserDocument } from "../../lib/service/UserService"
 
 const Login = () => {
     const navigate = useNavigate()
@@ -16,28 +17,26 @@ const Login = () => {
         signInWithPopup(auth, provider).then(async (result) => {
             if(result){
                 try {
-                    
-                    const userCollection = query(collection(db, "users"), where("name", "==", result.user.displayName))
-                    const userArray = await getDocs(userCollection);
-                    if(!userArray.docs[0]){
-                        await addDoc(collection(db, "users"), {
-                            name: result.user.displayName
-                        });
-                        navigate("/profile-setup")
-                    } else {
-                        const user = userArray.docs[0].data().name
-                        const setup = userArray.docs[0].data().finishSetup
-    
-                        if(user && setup){
-                            navigate("/home")
-                        }else if (user && !setup){
-                            navigate("/profile-setup")
-                        }
+                    const currentUser = await getCurrentUserDocument()
 
+                    if(currentUser){
+                        if(!currentUser.profileSetup){
+                            navigate("/profile-setup")
+                        }else{
+                            navigate("/home")
+                        }
+                    }else {
+                        const userId = result.user.uid
+                        const currentUserDoc = doc(db, "users", userId)
+                        await setDoc(currentUserDoc, {
+                            name: result.user.displayName,
+                            profileSetup: false
+                        })
+                        navigate("/profile-setup")
                     }
 
                 } catch (error) {
-                    console.log("ERROR IN LOGIN PAGE",error)
+                    console.log("ERROR IN LOGIN PAGE ",error)
                 }
             }    
         })

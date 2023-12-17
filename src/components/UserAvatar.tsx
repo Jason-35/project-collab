@@ -1,10 +1,10 @@
 import { Avatar, IconButton, ListItemIcon, Menu, MenuItem } from "@mui/material"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/AvatarMenu.css"
 import { CircleUser, LogOut } from "lucide-react";
 import { signOut } from "firebase/auth";
-import { auth, db } from "../firebase/firebase";
-import { query, collection, where, getDocs } from "firebase/firestore";
+import { auth } from "../firebase/firebase";
+import { getCurrentUserDocument } from "../lib/service/UserService";
 
 const UserAvatar = ({width, height} : {width: number, height: number}) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -14,16 +14,14 @@ const UserAvatar = ({width, height} : {width: number, height: number}) => {
         setAnchorEl(event.currentTarget);
     };
 
-    auth.onAuthStateChanged(async(user)=>{
-        if(user){
-            const userCollection = query(collection(db, "users"), where("name", "==", user.displayName))
-            const userArray = await getDocs(userCollection);
-
-            userArray.forEach((doc) => {
-                setImgUrl(doc.data().imgUrl)
-                   
-            })
+    useEffect(() => {
+        const getImgUrl = async() => {
+            const currentUser = await getCurrentUserDocument()
+            if(currentUser){
+                setImgUrl(currentUser.imgUrl)
+            }
         }
+        getImgUrl()
     })
 
     

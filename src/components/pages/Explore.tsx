@@ -1,30 +1,40 @@
-import { DocumentData, collection, getDocs, query } from "firebase/firestore";
+import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { db } from "../../firebase/firebase";
+import { auth } from "../../firebase/firebase";
 import NavigationBar from "../NavigationBar";
 import SideBar from "../SideBar";
 import "../../styles/Explore.css"
 import RequestToJoinModal from "../RequestToJoinModal";
+import { useNavigate } from "react-router-dom";
+import { getAllProjectGroups } from "../../lib/service/ProjectGroupService";
 
 const Explore = () => {
     const [projects, setProjects] = useState<DocumentData>([])
     const [openModal, setOpenModal] = useState(false)
     const [selectedProj, setSelectedProj] = useState<DocumentData | null>(null)
 
+    const navigate = useNavigate()
+
+    auth.onAuthStateChanged((user) => {
+        if(!user){
+            navigate("/login")
+        }
+    })
+
     useEffect(() => {
         const fetchData = async() => {
-            const querySnapshot = query(collection(db, "group"))
-            await getDocs(querySnapshot).then((data) => {
-                setProjects(data.docs.map(doc => doc.data()))
-            })
+            // const querySnapshot = query(collection(db, "projectGroup"))
+            // await getDocs(querySnapshot).then((data) => {
+            //     setProjects(data.docs.map(doc => doc.data()))
+            // })
+            const projectData = await getAllProjectGroups()
+            if(projectData) setProjects(projectData)
         }
 
         fetchData()
     }, [])
 
     const handleRequestToJoin = ( proj: DocumentData) => {
-        console.log("I WANT TO JOIN!")
-        console.log(proj.group.projectName)
         setSelectedProj(proj)
         setOpenModal(true)
     }
@@ -44,14 +54,14 @@ const Explore = () => {
         {projects.map((proj: DocumentData, index: number) => (
             <div className="searchCard" onClick={() => handleRequestToJoin(proj)} key={index}>
                 <div>
-                {proj.group.projectName} 
-                <br /> owner: {proj.owner}
-                <br /> 0 / {proj.group.max}
-                <br /> {proj.group.level}
-                <br /> 
+                    {proj.projectData.projectName} 
+                    <br /> owner: {proj.owner}
+                    <br /> 0 / {proj.projectData.max}
+                    <br /> {proj.projectData.level}
+                    <br /> 
                 </div>
                 <div>
-                    {proj.group.tags.map((skill:string, index:number) => (
+                    {proj.projectData.tags.map((skill:string, index:number) => (
                         <div key={index}>{skill}</div>
                     ))}
                 </div>

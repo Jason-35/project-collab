@@ -1,5 +1,4 @@
 import "../styles/Navigation.css"
-import { auth } from "../firebase/firebase";
 import { MenuIcon } from "lucide-react";
 import UserAvatar from "./UserAvatar";
 import { useOpenSidebar } from "../lib/hooks/sidebar-hook";
@@ -11,13 +10,6 @@ const NavigationBar = () => {
 
     const {openSidebar, setOpenSidebar} = useOpenSidebar()
     const navigate = useNavigate()
-
-
-    let username = ""
-
-    if(auth.currentUser?.displayName && username === ""){
-        username = auth.currentUser.displayName
-    }
 
     const handleSidebar = () => {
         setOpenSidebar(!openSidebar)
