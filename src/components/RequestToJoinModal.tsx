@@ -4,24 +4,27 @@ import React from "react"
 import { db } from "../firebase/firebase";
 import { getCurrentDisplayName, getCurrentUserUid } from "../lib/service/UserService";
 import { db_collections } from "../constants/constant";
+import { v4 as uuid } from "uuid";
  
 const RequestToJoinModal = ({setOpenModal, openModal, selectedProj} : {setOpenModal: React.Dispatch<React.SetStateAction<boolean>>, openModal: boolean, selectedProj: DocumentData | null}) => {
-
 
     const joinRequest = async() => {
         const createdAt = new Date()
         const currentUserName = getCurrentDisplayName()
         const userId = getCurrentUserUid()
+        const msgId = uuid()
         if(selectedProj){
             await updateDoc(doc(db, db_collections.USERS, selectedProj.ownerId), {
                 notification: arrayUnion({
+                msgId: msgId,
                 from: currentUserName,
                 fromId: userId,
                 message: "I want to join!",
                 joining: selectedProj.projectData.projectName,
                 type: "request",
                 read: false,
-                createdAt: createdAt
+                createdAt: createdAt,
+                projUrl: selectedProj.url
                 })
             })
         }

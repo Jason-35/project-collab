@@ -1,0 +1,15 @@
+.message-card {
+    border: solid black 1px;
+}
+
+.message-card:hover {
+    cursor: pointer;
+}
+
+.unread {
+    background-color: aqua;
+}
+
+.read {
+    background-color: white;
+}

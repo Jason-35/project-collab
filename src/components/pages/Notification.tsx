@@ -3,11 +3,8 @@ import NavigationBar from "../NavigationBar";
 import SideBar from "../SideBar";
 import { getCurrentUserDocument } from "../../lib/service/UserService";
 import MessageCard from "../MessageCard";
+import "../../styles/Notification.css"
 
-interface CreatedField {
-    seconds: number,
-    nanoseconds: number
-}
 
 interface NotificationField {
     createdAt: {
@@ -20,13 +17,19 @@ interface NotificationField {
     type: string,
     from: string,
     fromId: string,
-    createdString: string
+    createdString: string,
+    msgId: string,
+    projUrl: string
 }
 
 const Notification = () => {
 
-    const sortByCreated = (a: CreatedField, b: CreatedField) => {
-        return a.nanoseconds - b.nanoseconds;
+    const sortByCreated = (a: NotificationField, b: NotificationField) => {
+
+        const dateA = new Date(a.createdString).getTime();
+        const dateB = new Date(b.createdString).getTime();
+
+        return dateB - dateA;
     };
 
     const mapCreatedAtToString = (noti: NotificationField): string => {
@@ -52,9 +55,13 @@ const Notification = () => {
             if(currentUserDoc){
                 const NotificationWithDate = (currentUserDoc.notification.map((noti: NotificationField) => {
                     return {...noti, createdString: mapCreatedAtToString(noti)}
-                }).sort(sortByCreated))
-                setMessages(NotificationWithDate)
+                }))
+
+                NotificationWithDate.sort(sortByCreated)
+                
                 console.log(NotificationWithDate)
+
+                setMessages(NotificationWithDate)
             }
         }
         fetchNotification()
@@ -65,9 +72,11 @@ const Notification = () => {
     <div>
         <NavigationBar />
         <SideBar />
-        <div>
-            {messages && messages.length > 0 && messages.map((msg) => (
+        <div className="message-container">
+            <input placeholder="search..." />
+            {messages && messages.length > 0 && messages.map((msg, index) => (
                 <MessageCard
+                key={index}
                 createdString={msg.createdString}
                 from={msg.from} 
                 fromId={msg.fromId}
@@ -75,6 +84,8 @@ const Notification = () => {
                 read={msg.read}
                 joining={msg.joining}
                 message={msg.message}
+                msgId={msg.msgId}
+                projUrl={msg.projUrl}
                 />
             ))}
         </div>
