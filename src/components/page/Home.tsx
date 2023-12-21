@@ -1,7 +1,7 @@
 import { auth } from "../../firebase/firebase";
 import { useNavigate } from "react-router-dom";
-import NavigationBar from "../NavigationBar";
-import SideBar from "../SideBar";
+import NavigationBar from "../DefaultLayout/components/NavigationBar/NavigationBar";
+import SideBar from "../DefaultLayout/components/SideBar/SideBar";
 import RecommendedProjects from "../RecommendedProjects";
 import Friends from "../Friends";
 import Activity from "../Activity";

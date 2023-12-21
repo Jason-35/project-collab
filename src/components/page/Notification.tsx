@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import NavigationBar from "../NavigationBar";
-import SideBar from "../SideBar";
+import NavigationBar from "../DefaultLayout/components/NavigationBar/NavigationBar";
+import SideBar from "../DefaultLayout/components/SideBar/SideBar";
 import { getCurrentUserDocument } from "../../lib/service/UserService";
 import MessageCard from "../MessageCard";
 import "../../styles/Notification.css"

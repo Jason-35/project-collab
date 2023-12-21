@@ -1,0 +1,39 @@
+.member-bar {
+    outline: solid green 3px;
+    position: absolute;
+    content: "";
+    left: 85%;
+    height: 90%;
+    width: 14%;
+
+}
+
+.assignment {
+    outline: solid yellow 3px;
+    display: flex;
+    height: 50%;
+    width: 80%;
+    justify-content: space-evenly;
+}
+
+.features {
+    outline: solid brown 3px;
+    width: 30%;
+}
+
+.feature-assignment {
+    height: 80%;
+    width: 100%;
+    outline: solid 3px aqua;
+}
+
+.bugs {
+    outline: 3px solid black;
+    width: 30%
+}
+
+.bug-assignment {
+    height: 80%;
+    width: 100%;
+    outline: solid 3px aqua;
+}

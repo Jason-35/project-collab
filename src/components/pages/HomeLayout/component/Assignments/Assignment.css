@@ -1,0 +1,58 @@
+.assignment-component {
+    outline: solid black 3px;
+    height: 45%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.assignment-card-container{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+
+.assignment-card {
+    margin: 0;
+    padding: 0;
+    /* border-top: 1px solid black;
+    border-bottom: 1px solid black; */
+    min-height: 35%;
+    transition: transform 0.3s;
+    position: relative;
+    width: calc(100% + 10rem);
+    display: flex;
+    justify-content: space-between;
+    transition: transform 0.5s ease-in-out;
+}
+
+.assignment-view {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 1.5rem 0px 1.5rem;
+    background-color: black;
+}
+
+.assignment-view button {
+    width: 6rem;
+    height: 40px;
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+    box-shadow: 0px 10px 0px 0px white;
+}
+
+.assignment-view button:hover {
+    transform: translateY(10px);
+    box-shadow: 0px 0px 0px 0px white;
+}
+
+.assignment-card:hover {
+    transform: translateX(-10rem);
+}

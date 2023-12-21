@@ -1,7 +1,7 @@
-import "../styles/Navigation.css"
+import "./Navigation.css"
 import { MenuIcon } from "lucide-react";
-import UserAvatar from "./UserAvatar";
-import { useOpenSidebar } from "../lib/hooks/sidebar-hook";
+import UserAvatar from "../../../UserAvatar";
+import { useOpenSidebar } from "../../../../lib/hooks/sidebar-hook";
 import { useNavigate } from "react-router-dom";
 
 

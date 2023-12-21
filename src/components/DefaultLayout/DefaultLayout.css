@@ -1,0 +1,25 @@
+.container-with-nav {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.divider {
+    outline: solid black 2px;   
+    width: 100%;
+    margin-bottom: 3px;
+}
+
+.divider-nm {
+    outline: solid black 1px;   
+    width: 100%;
+    margin: 0;
+}
+
+.no-scroll::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
+.no-scroll::-webkit-scrollbar-track {
+    background-color: transparent;
+}

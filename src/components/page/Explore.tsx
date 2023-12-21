@@ -1,8 +1,8 @@
 import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { auth } from "../../firebase/firebase";
-import NavigationBar from "../NavigationBar";
-import SideBar from "../SideBar";
+import NavigationBar from "../DefaultLayout/components/NavigationBar/NavigationBar";
+import SideBar from "../DefaultLayout/components/SideBar/SideBar";
 import "../../styles/Explore.css"
 import RequestToJoinModal from "../RequestToJoinModal";
 import { useNavigate } from "react-router-dom";

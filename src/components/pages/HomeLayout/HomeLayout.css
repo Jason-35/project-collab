@@ -1,0 +1,23 @@
+.home-layout {
+    flex: 1;
+    display: flex;
+    justify-content: space-evenly;
+    /* gap: 10px; */
+}
+
+.home-left-layout {
+    /* outline: solid red 3px; */
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 2%;
+}
+
+.home-right-layout {
+    /* outline: solid green 3px; */
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

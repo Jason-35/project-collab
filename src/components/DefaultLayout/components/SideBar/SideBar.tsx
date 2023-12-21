@@ -1,12 +1,12 @@
-import { useOpenSidebar } from "../lib/hooks/sidebar-hook";
-import "../styles/Sidebar.css"
-import CatLogo from '../assets/kitty.png'
+import { useOpenSidebar } from "../../../../lib/hooks/sidebar-hook";
+import "./Sidebar.css"
+import CatLogo from '../../../../assets/kitty.png'
 import { Bell, Bug, Home, Search, UserPlus, Users, X } from "lucide-react";
 import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import CreateProjectModal from "./CreateProjectModal";
+import CreateProjectModal from "../../../CreateProjectModal";
 import { useEffect, useState } from "react";
-import { getCurrentUserDocument } from "../lib/service/UserService";
+import { getCurrentUserDocument } from "../../../../lib/service/UserService";
 
 interface projObject {
     projectName: string,
@@ -99,7 +99,10 @@ const SideBar = () => {
                     <ul className="group-section">
                         {listProj && (listProj.length > 0) && listProj.map((proj) => (
                             <li>
-                                <span onClick={() => navigate(proj.projectUrl)}>
+                                <span onClick={() => {
+                                    navigate(proj.projectUrl)
+                                    setOpenSidebar(false)
+                                }}>
                                     {proj.projectName}
                                 </span>
                             </li>

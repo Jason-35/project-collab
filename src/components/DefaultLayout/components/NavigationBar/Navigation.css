@@ -2,7 +2,7 @@
     height: 8%;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid red;
+    border-bottom: 3px solid black;
 }
 
 .navigation-items {
@@ -19,7 +19,6 @@
 }
 
 .navigation-items-list {
-    /* outline: solid 3px green; */
     display: flex;
     justify-content: center;
     align-items: center;
