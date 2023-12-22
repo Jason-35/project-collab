@@ -1,0 +1,19 @@
+.chat-box {
+    flex: 1;
+    max-height: 100%;
+    padding: 0px 10px 0px 10px;
+    margin: 0;
+    padding: 0;
+    /* overflow: scroll; */
+}
+
+.chat-container {
+    max-height: 51rem;
+    overflow: scroll;
+    padding: 0px 10px 0px 10px;
+}
+
+
+.chat-msg p {
+    margin: 0;
+}

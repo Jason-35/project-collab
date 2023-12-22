@@ -1,0 +1,26 @@
+.header {
+    display: flex;
+    height: 5%;
+    /* outline: solid 3px red; */
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: x-large;
+    border-bottom: 3px solid black;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.members {
+    /* outline: solid blue 3px; */
+    position: absolute;
+    right: 1.5rem;
+    height: 4.5%;
+}
+
+.members:hover {
+    cursor: pointer;
+}

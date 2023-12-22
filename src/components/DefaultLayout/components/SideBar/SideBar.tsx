@@ -1,7 +1,7 @@
 import { useOpenSidebar } from "../../../../lib/hooks/sidebar-hook";
 import "./Sidebar.css"
 import CatLogo from '../../../../assets/kitty.png'
-import { Bell, Bug, Home, Search, UserPlus, Users, X } from "lucide-react";
+import { Bell, Home, Search, UserPlus, Users, X } from "lucide-react";
 import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import CreateProjectModal from "../../../CreateProjectModal";
@@ -70,13 +70,6 @@ const SideBar = () => {
                             }}>
                             <span className="list-icons"><Bell/></span>
                             <span>Notification</span>
-                        </li>
-                        <li onClick={() => {
-                            setOpenSidebar(false)
-                            navigate("/issues")
-                            }}>
-                            <span className="list-icons"><Bug /></span>
-                            <span>Issues</span>
                         </li>
                         <li onClick={() => {
                             setOpen(true)

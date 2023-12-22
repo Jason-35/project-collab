@@ -1,8 +1,9 @@
 .navigation-bar {
-    height: 8%;
+    min-height: 8%;
     display: flex;
     align-items: center;
     border-bottom: 3px solid black;
+    /* outline: solid red 3px */
 }
 
 .navigation-items {

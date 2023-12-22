@@ -8,8 +8,8 @@ const Assignments = () => {
             <div className="assignment-card-container no-scroll">
                 <div className="assignment-card">
                     <div className="assignment-card-description">
-                        <h3>This display is not rendering A really long display :DDDDD:DDDDD:DDDDD</h3>
-                        <p>project awsome!</p>
+                        <h3>Need to style the project room!</h3>
+                        <p>project collab</p>
                     </div>
                     <div className="assignment-view">
                         <button>View</button>
@@ -20,8 +20,8 @@ const Assignments = () => {
                 {/*  */}
                 <div className="assignment-card">
                     <div className="assignment-card-description">
-                        <h3>This display is not rendering A really long display :DDDDD:DDDDD:DDDDD</h3>
-                        <p>project awsome!</p>
+                        <h3>Fix the notification room</h3>
+                        <p>project collab</p>
                     </div>
                     <div className="assignment-view">
                         <button>View</button>

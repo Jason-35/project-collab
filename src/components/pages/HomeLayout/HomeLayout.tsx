@@ -2,9 +2,9 @@ import { useNavigate } from "react-router-dom";
 import DefaultLayout from "../../DefaultLayout/DefaultLayout";
 import { auth } from "../../../firebase/firebase";
 import { useState } from "react";
-import Recommendation from "./component/Recommendation/Recommendation";
-import Bugs from "./component/Bugs/Bugs";
-import Assignments from "./component/Assignments/Assignments";
+import Recommendation from "./components/Recommendation/Recommendation";
+import Bugs from "./components/Bugs/Bugs";
+import Assignments from "./components/Assignments/Assignments";
 import "./HomeLayout.css"
 
 

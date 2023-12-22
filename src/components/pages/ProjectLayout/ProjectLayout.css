@@ -1,0 +1,17 @@
+.project-layout {
+    border: solid green 3px;
+    display: flex;
+}
+
+.project-left-column {
+    /* outline: solid green 3px; */
+    width: 75%;
+    display: grid;
+    grid-template-rows: 50% 50%;
+    grid-template-columns: 50% 50%;
+}
+
+.project-right-column{
+    /* outline: solid green 3px; */
+    width: 25%;
+}

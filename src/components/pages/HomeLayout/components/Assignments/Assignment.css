@@ -20,8 +20,6 @@
 .assignment-card {
     margin: 0;
     padding: 0;
-    /* border-top: 1px solid black;
-    border-bottom: 1px solid black; */
     min-height: 35%;
     transition: transform 0.3s;
     position: relative;
@@ -29,6 +27,10 @@
     display: flex;
     justify-content: space-between;
     transition: transform 0.5s ease-in-out;
+}
+
+.assignment-card-description {
+    padding-left: 1.5rem;
 }
 
 .assignment-view {

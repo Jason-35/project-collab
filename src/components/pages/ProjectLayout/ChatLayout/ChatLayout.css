@@ -1,0 +1,8 @@
+.chat-layout-container {
+    /* outline: solid 3px red; */
+    height: 100%;
+    border-left: solid 4px black;
+    border-right: solid 4px black;
+    display: flex;
+    flex-direction: column;
+}
