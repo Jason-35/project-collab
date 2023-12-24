@@ -1,13 +1,13 @@
 import { GoogleAuthProvider, signInWithPopup,  } from "firebase/auth"
-import { auth } from "../../firebase/firebase"
+import { auth } from "../../../firebase/firebase"
 // import { useNavigate } from "react-router-dom"
 import { ReactSVG } from "react-svg"
-import HighFive from "../../assets/high-five.svg"
-import "../../styles/Login.css"
-import { db } from "../../firebase/firebase"
+import HighFive from "../../../assets/high-five.svg"
+import "./Login.css"
+import { db } from "../../../firebase/firebase"
 import { doc, setDoc } from "firebase/firestore"
 import { useNavigate } from "react-router-dom"
-import { getCurrentUserDocument } from "../../lib/service/UserService"
+import { getCurrentUserDocument } from "../../../lib/service/UserService"
 
 const Login = () => {
     const navigate = useNavigate()

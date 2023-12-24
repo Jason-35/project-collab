@@ -7,7 +7,7 @@ const ExploreLayout = () => {
 
 
     const layout = (
-    <div className="explore-layout flex-1">
+    <div className="explore-layout">
         <SearchBar />
         <Explore />
     </div>

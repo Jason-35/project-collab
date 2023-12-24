@@ -36,7 +36,7 @@
 
 .menu-icon:hover {
     cursor: pointer;
-    outline: solid yellow 1px;
+    outline: solid black 2px;
     border-radius: 13px;
 }
 

@@ -1,5 +1,4 @@
 .explore-layout {
-    /* outline: solid green 3px; */
     display: flex;
     flex-direction: column;
 }

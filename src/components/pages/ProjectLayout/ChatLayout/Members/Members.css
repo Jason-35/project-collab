@@ -1,0 +1,11 @@
+.members-container {
+    /* outline: solid red 3px; */
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    overflow: scroll;
+}
+
+.members-container p {
+    padding: 0px 10px 0px 10px;
+}

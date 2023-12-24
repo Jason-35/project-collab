@@ -1,0 +1,14 @@
+.inbox-card h2, .inbox-card p{
+    padding: 0px 10px 0px 10px;
+}
+
+
+.inbox-card {
+    border-top: solid 2px black;
+    border-bottom: solid 2px black;
+}
+
+.inbox-card:hover {
+    cursor: pointer;
+    background-color: gray;
+}

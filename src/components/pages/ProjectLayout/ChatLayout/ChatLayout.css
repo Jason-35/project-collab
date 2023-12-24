@@ -1,8 +1,12 @@
 .chat-layout-container {
-    /* outline: solid 3px red; */
-    height: 100%;
+    /* min-height: 100%; */
+    /* outline: solid 5px magenta; */
+    /* flex: 1; */
+    flex-grow: 1;
+    min-height: 0;
     border-left: solid 4px black;
     border-right: solid 4px black;
     display: flex;
     flex-direction: column;
+    /* background-color: aqua; */
 }

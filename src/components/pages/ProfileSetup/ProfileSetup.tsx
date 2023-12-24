@@ -1,18 +1,21 @@
-import "../../styles/ProfileSetup.css"
-import KittyComp from "../../assets/kitty-computer-256.png"
-import Cool from "../../assets/cool.png"
-import { ChangeEvent, SyntheticEvent, useRef, useState } from "react"
-import Avatar from "react-avatar"
-import { useNavigate } from "react-router-dom"
-import { Autocomplete, TextField } from "@mui/material"
-import KittyWrite from "../../assets/kitty-write.png"
-import jsonData from "../../assets/skills.json"
+import "./ProfileSetup.css"
+import KittyComp from "../../../assets/kitty-computer-256.png"
+import Cool from "../../../assets/cool.png"
+import KittyWrite from "../../../assets/kitty-write.png"
+import jsonData from "../../../assets/skills.json"
+
 import { updateDoc, doc } from "firebase/firestore"
-import { auth, db, storage } from "../../firebase/firebase"
+import { auth, db, storage } from "../../../firebase/firebase"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
+
+import { UserSetup } from "../../../constants/constant"
+import Avatar from "react-avatar"
 import { v4 as uuid } from "uuid";
-import { getCurrentUserUid } from "../../lib/service/UserService"
-import { UserSetup } from "../../constants/constant"
+import { Autocomplete, TextField } from "@mui/material"
+
+import { useNavigate } from "react-router-dom"
+import { ChangeEvent, SyntheticEvent, useRef, useState } from "react"
+import { getCurrentUserUid } from "../../../lib/service/UserService"
 
 const ProfileSetup = () => {
 

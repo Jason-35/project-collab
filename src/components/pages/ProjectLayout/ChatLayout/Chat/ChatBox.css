@@ -1,16 +1,9 @@
 .chat-box {
+    /* outline: solid blueviolet 13px; */
     flex: 1;
-    max-height: 100%;
+    min-height: 0;
     padding: 0px 10px 0px 10px;
-    margin: 0;
-    padding: 0;
-    /* overflow: scroll; */
-}
-
-.chat-container {
-    max-height: 51rem;
     overflow: scroll;
-    padding: 0px 10px 0px 10px;
 }
 
 

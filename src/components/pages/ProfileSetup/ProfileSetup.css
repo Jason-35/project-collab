@@ -3,7 +3,7 @@
     position: absolute;
     height: 90%;
     width: 90%;
-    background-color: aqua;
+    /* background-color: aqua; */
     transition: left 1s ease-in-out, right 1s ease-in-out;
     left: 0;
     right: 0;
@@ -14,12 +14,13 @@
     flex-direction: column;
     justify-content: space-around;
     border-radius: 10px;
-    box-shadow: 0px 0px 20px 5px;
+    /* box-shadow: 0px 0px 20px 5px; */
+    border: solid 2px black;
 }
 
 @media (min-width: 1000px) {
     .card {
-        background-color: greenyellow;
+        /* background-color: white; */
         /* height: 50%; */
         width: 30%;
     }
@@ -55,8 +56,15 @@
 .file-upload-btn {
     width: 6rem;
     height: 2rem;
-    border: none;
+    border: 2px solid black;
     border-radius: 10px;
+    background-color: white;
+
+}
+
+.file-upload-btn:hover {
+    background-color: black;
+    color: white;
 }
 
 .level-btns {
@@ -66,14 +74,20 @@
 }
 
 .level-btns button {
+    background-color: white;
     width: 10rem;
     height: 3rem;
-    border: none;
+    border: solid 2px black;
     border-radius: 10px;
 }
 
+.level-btns button:hover {
+    cursor: pointer;
+}
+
 #selected {
-    background-color: red;
+    background-color: black;
+    color: white;
 }
 
 .MuiFormControl-root textarea {
@@ -85,14 +99,17 @@
 }
 
 .next-btn {
+    background-color: white;
     width: 100px;
     height: 2.5rem;
-    border: none;
+    border: solid 2px black;
     border-radius: 10px;
 }
 
 .next-btn:hover {
     cursor: pointer;
+    background-color: black;
+    color: white;
 }
 
 .out-of-view {
@@ -114,10 +131,16 @@
 }
 
 .skillbox {
-    /* outline: solid green 1px; */
-    width: 200px;
+    outline: solid black 2px;
+    width: 50%;
     height: 300px;
     margin-top: -5rem;
+}
+
+.skillbox button {
+    background-color: white;
+    border: 2px solid black;
+    margin: 2px;
 }
 
 .auto-complete {
@@ -125,6 +148,18 @@
     align-items: center;
     justify-content: center;
 }
+
+.bioText {
+    outline: solid black 2px;
+    border-radius: 10px;
+    width: 50%;
+}
+
+
+.bioText .MuiInputBase-root textarea {
+    font-size: 1.5rem;
+}
+
 
 #welcome-card {
     z-index: 5;

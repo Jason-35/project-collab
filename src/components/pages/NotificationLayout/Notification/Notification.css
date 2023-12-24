@@ -1,0 +1,29 @@
+.notification-container {
+    outline: solid 3px black;
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.notification {
+    /* border: solid 13px green; */
+    flex: 1;
+    min-height: 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.notification h1 {
+    padding: 0 10px 0 10px;
+}
+
+.inbox {
+    /* outline: solid 13px red; */
+    /* display: flex; */
+    flex: 1;
+    min-height: 0;
+    /* height: 100%; */
+    overflow: scroll;
+
+}

@@ -1,7 +1,8 @@
 
 
 .sign-up-container {
-    background-color: var(--lavender);
+    border: solid 2px black;
+    background-color: white;
     height: 100%;
     width: 100%;
     display: flex;
@@ -12,10 +13,8 @@
 
 @media (min-width: 1100px) {
     .sign-up-container {
-        background-color: var(--lavender);
         height: 75%;
         width: 30%;
-        box-shadow: 0px 0px 25px 5px var(--dark-blue);
         border-radius: 1rem;
         
     }
@@ -23,7 +22,7 @@
 
 
 .bg-bluish {
-    background-color: var(--bluish);
+    /* background-color: var(--bluish); */
 }
 
 #high-five {
@@ -41,15 +40,18 @@
 
 .sign-in {
     padding: 1rem;
-    background-color: var(--ivory);
-    border: none;
+    background-color: white;
+    border: 2px solid black;
     border-radius: 50px;
     font-weight: 700;
+    box-shadow: 0px 4px 0px 0px;
 }
 
 .sign-in:hover {
     cursor: pointer;
     background-color: #f0ffb9;
+    transform: translateY(4px);
+    box-shadow: 0px 0px 0px 0px;
 }
 
 @media (min-width: 1100px) {

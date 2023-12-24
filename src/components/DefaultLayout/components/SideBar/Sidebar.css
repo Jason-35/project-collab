@@ -60,13 +60,12 @@
 
 
 .x-button {
-    outline: solid brown 1px;
+    outline: solid black 2px;
     padding: 3px;
     border-radius: 3px;
 }
 
 .x-button:hover {
-    color: yellow;
     cursor: pointer;
 }
 
