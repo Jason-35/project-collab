@@ -67,6 +67,8 @@
 
 .x-button:hover {
     cursor: pointer;
+    background-color: black;
+    color: white;
 }
 
 .sidebar-list {
@@ -91,8 +93,8 @@
 
 
 .sidebar-list li:hover {
-    color: green;
-    outline: solid 1px green;
+    color: white;
+    background-color: black;
     cursor: pointer;
 }
 
@@ -150,4 +152,22 @@
     overflow-wrap: break-word;
 }
 
+.create-project {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
 
+.form-center {
+    display: flex;
+    align-items: center;
+}
+
+.content-container {
+    /* outline: solid 3px blue; */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: start;
+    justify-content: space-evenly;
+}

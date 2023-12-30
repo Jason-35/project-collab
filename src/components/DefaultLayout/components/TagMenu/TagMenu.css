@@ -1,0 +1,14 @@
+.tag-menu-container {
+    display: inline-block;
+    width: 300px;
+}
+
+.tag-container {
+    height: 30px;
+}
+
+.tag-container span {
+    border: 1px solid black;
+    display: inline-block;
+    margin: 2px;
+}

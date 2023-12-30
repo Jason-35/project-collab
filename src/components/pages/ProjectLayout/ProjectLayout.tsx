@@ -1,6 +1,6 @@
 import DefaultLayout from "../../DefaultLayout/DefaultLayout";
 import Assignment from "./Assignment/Assignment";
-import Bugs from "./Bugs/Bugs";
+import Guideline from "./Guideline/Guideline";
 import ChatLayout from "./ChatLayout/ChatLayout";
 import Features from "./Features/Features";
 import Logs from "./Logs/Logs";
@@ -11,8 +11,8 @@ const ProjectLayout = () => {
     const layout = (
         <div className="project-layout flex-1">
             <div className="project-left-column">
+                <Guideline />
                 <Features />
-                <Bugs />
                 <Logs />
                 <Assignment />
             </div>
