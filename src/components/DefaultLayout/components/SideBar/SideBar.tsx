@@ -6,10 +6,13 @@ import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 // import CreateProjectModal from "../../../CreateProjectModal";
 import { useEffect, useState } from "react";
-import { getCurrentUserDocument } from "../../../../lib/service/UserService";
+import { getCurrentDisplayName, getCurrentUserDocument, getCurrentUserUid, updateCurrentUserDocument } from "../../../../lib/service/UserService";
 import DefaultModal from "../Modal/DefaultModal";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import TagMenu from "../TagMenu/TagMenu";
+import { setDoc, doc, serverTimestamp, arrayUnion } from "firebase/firestore";
+import { v4 as uuid } from "uuid";
+import { db } from "../../../../firebase/firebase";
 
 interface projObject {
     projectName: string,
@@ -46,6 +49,7 @@ const SideBar = () => {
     const navigate = useNavigate()
 
     useEffect(()=>{
+        console.log("reloads")
         const fetchProjects = async() =>{
             const currentUser = await getCurrentUserDocument()
             if(currentUser && currentUser.memberOfProject.length > 0){
@@ -64,10 +68,44 @@ const SideBar = () => {
         }
     } 
 
-    const handleCreateProject = () => {
+    const handleCreateProject = async() => {
         setOpenSidebar(false)
         setOpen(false)
-        setFormData({...formData, ["tags"]: tags, ["max"]: size, ["level"]: experience})
+        formData["tags"] = tags
+        formData["max"] = size
+
+        const uid = uuid()
+        const userDisplayName = getCurrentDisplayName()
+        const userId = getCurrentUserUid()
+        formData.url = `/project/${uid}`
+        
+        await setDoc(doc(db, "projectGroup", uid), {
+            owner: userDisplayName,
+            ownerId: userId,
+            url: formData.url,
+            projectData: formData,
+            members: [userDisplayName],
+            createdAt: serverTimestamp()
+        });
+        
+        await updateCurrentUserDocument({
+            memberOfProject: arrayUnion({
+                projectName: formData.projectName,
+                projectUrl: formData.url
+            })
+        })
+
+        setFormData({
+            projectName: '',
+            level: 'beginner',
+            tags: [],
+            description: '',
+            url: '',
+            max: 1
+          })
+
+        navigate(`${formData.url}`)
+        
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,23 +126,27 @@ const SideBar = () => {
 
         <form className="content-container">
             <div className="form-center">
-                <label>Project Name: </label>
+                <label>Project Name</label> <br />
                 <input type="text" onChange={(e) => setFormData({...formData, ["projectName"]: e.target.value})} />
             </div>
             <div className="form-center">
-                <label>Level:</label>
-                <DropdownMenu selected={experience} setSelected={setExperience} items={["beginner","intermediate","expert"]}/>
+                <div className="level-size">
+                    <div className="level">
+                        <label>Level</label> <br />
+                        <DropdownMenu formData={formData} setForm={setFormData} selected={experience} setSelected={setExperience} items={["beginner","intermediate","expert"]}/>
+                    </div>
+                    <div className="size">
+                        <label>Size</label> <br />
+                        <input type="number" value={size} onChange={handleInputChange}/>
+                    </div>
+                </div>
             </div>
             <div className="form-center">
-                <label>Descriptions:</label>
+                <label>Descriptions</label> <br />
                 <textarea name="" id="" cols={40} rows={5} onChange={(e) => setFormData({...formData, ["description"]: e.target.value})}></textarea>
             </div>
             <div className="form-center">
-                <label>Size:</label>
-                <input type="number" value={size} onChange={handleInputChange}/>
-            </div>
-            <div className="form-center">
-                <label>Tags:</label>
+                <label>Tags</label> <br />
                 <TagMenu items={["java", "python"]} tags={tags} setTags={setTags} />
             </div>
         </form>
@@ -164,6 +206,7 @@ const SideBar = () => {
                         {listProj && (listProj.length > 0) && listProj.map((proj) => (
                             <li>
                                 <span onClick={() => {
+                                    console.log(proj.projectUrl)
                                     navigate(proj.projectUrl)
                                     setOpenSidebar(false)
                                 }}>

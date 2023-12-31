@@ -12,13 +12,18 @@ interface DefaultModalProps {
 
 const DefaultModal = ({open, setOpen, heading, title, content, buttons}: DefaultModalProps) => {
 
+    const handleClose = (e: { stopPropagation: () => void; }) => {
+        e.stopPropagation()
+        setOpen(false)
+    }
+
 
     const modal = open ? (
         <div className="default-modal">
             <div className="modal-header">
                 <h1>{title}</h1>
                 {heading}
-                <X className="x-button" onClick={() => setOpen(false)} />
+                <X className="x-button" onClick={handleClose} />
             </div>
 
             <div className="modal-content">

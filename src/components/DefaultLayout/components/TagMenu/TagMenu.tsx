@@ -11,14 +11,16 @@ const TagMenu = ({ items, tags, setTags }:TagMenuProps) => {
     const [display, setDisplay] = useState(false)
 
     const handleSelected = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-        console.log("selected", e.currentTarget.textContent)
         if(e.currentTarget.textContent){
             const selectedTag = e.currentTarget.textContent
             if(tags.includes(selectedTag)){
+                console.log("includes")
                 setTags((prev) => prev.filter((item) => item !== selectedTag))
             }else{
+                console.log("adding")
                 setTags((prev) => [...prev, selectedTag])
             }
+            // console.log(tags)
         }
     }
 
@@ -37,7 +39,7 @@ const TagMenu = ({ items, tags, setTags }:TagMenuProps) => {
                 <div className={`carrot ${display && "carrot-rotate"}`}></div>
             </div>
             {display && 
-            <ul className="dropdown-selection">
+            <ul className="dropdown-selection-menu">
                 {items && items.length > 0 && items.map((item, index) => (
                     <li onClick={handleSelected} key={index}>{item}</li>
                 ))}

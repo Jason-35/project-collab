@@ -1,20 +1,36 @@
 import { useState } from "react";
 import "./DropdownMenu.css"
 
+
+interface FormData {
+    projectName: string;
+    level: string;
+    tags: string[];
+    description: string;
+    url: string;
+    max: number
+}
+
+
 interface DropdownMenuProps {
     items?: Array<string>;
     selected: string;
-    setSelected: React.Dispatch<React.SetStateAction<string>>
+    setSelected: React.Dispatch<React.SetStateAction<string>>;
+    setForm?: React.Dispatch<React.SetStateAction<FormData>>;
+    formData? : FormData
 }
 
-const DropdownMenu = ({ items, selected, setSelected }:DropdownMenuProps) => {
+
+const DropdownMenu = ({ items, selected, setSelected, setForm, formData }:DropdownMenuProps) => {
     const [display, setDisplay] = useState(false)
 
     const handleSelected = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
         if(e.currentTarget.textContent){
             setSelected(e.currentTarget.textContent)
+            if(setForm && formData){
+                setForm({...formData, ["level"]: e.currentTarget.textContent})
+            }
         }
-        console.log(display)
         setDisplay(false)
 
     }
