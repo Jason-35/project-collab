@@ -1,6 +1,10 @@
 import { useState } from "react";
 import "./InboxCard.css"
 import DefaultModal from "../../../../DefaultLayout/components/Modal/DefaultModal";
+import uuid from "react-uuid";
+import { getCurrentDisplayName, getCurrentUserUid } from "../../../../../lib/service/UserService";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { db } from "../../../../../firebase/firebase";
 
 interface NotificationField {
     createdAt: {
@@ -31,22 +35,95 @@ const InboxCard = ({title, from, projectData}:InboxCardProps) => {
         setOpen(true)
     }
 
+    const handleAccept = async() => {
+        const createdAt = new Date()
+        const currentUserName = getCurrentDisplayName()
+        const currentUserId = getCurrentUserUid()
+        const respId = uuid()
+
+        await updateDoc(doc(db, "users", projectData.fromId), {
+            notification: arrayUnion({
+                msgId: respId,
+                from: currentUserName,
+                fromId: currentUserId,
+                message: `${currentUserName} has accepted your request to join ${projectData.joining}`,
+                joining: projectData.joining,
+                type: "response",
+                read: false,
+                createdAt: createdAt
+            }),
+            memberOfProject: arrayUnion({
+                projectName: projectData.joining,
+                projectUrl: projectData.projUrl
+            })
+        })
+
+        const urlId = projectData.projUrl.split("/")[2]
+        await updateDoc(doc(db, "projectGroup", urlId), {
+            members: arrayUnion({
+                user: projectData.from,
+                userId: projectData.fromId
+            })
+        })
+
+        setOpen(false)
+    }
+
+    const handleReject = async() => {
+        const createdAt = new Date()
+        const currentUserName = getCurrentDisplayName()
+        const currentUserId = getCurrentUserUid()
+        const respId = uuid()
+
+        await updateDoc(doc(db, "users", projectData.fromId), {
+            notification: arrayUnion({
+                msgId: respId,
+                from: currentUserName,
+                fromId: currentUserId,
+                message: `${currentUserName} has declined your request to join ${projectData.joining}`,
+                joining: projectData.joining,
+                type: "response",
+                read: false,
+                createdAt: createdAt
+            })
+        })
+
+        setOpen(false)
+    }
+
     const button = (
         <div>
-            <button>Accept</button>
-            <button>Reject</button>
+            <button onClick={handleAccept}>Accept</button>
+            <button onClick={handleReject}>Reject</button>
         </div>
     )
 
+    const inboxCard = projectData.type === "request" ? (
+        (
+            <div onClick={handleOpen} className="inbox-card">
+                <span><h2>{title}</h2> <p>from {from}</p></span>
+                {open && <div onClick={(e) => {
+                    e.stopPropagation()
+                    setOpen(false)
+                }} className="sheet"></div>}
+                <DefaultModal open={open} setOpen={setOpen} title={`Join request for ${projectData.joining}`} buttons={button}/>
+            </div>
+        )
+    ) : (
+        (
+            <div className="inbox-card">
+                <span><h2>{title}</h2> <p>from {from}</p></span>
+                {open && <div onClick={(e) => {
+                    e.stopPropagation()
+                    setOpen(false)
+                }} className="sheet"></div>}
+                <DefaultModal open={open} setOpen={setOpen} title={`Join request for ${projectData.joining}`} buttons={button}/>
+            </div>
+        )
+    )
+
     return ( 
-        <div onClick={handleOpen} className="inbox-card">
-            <span><h2>{title}</h2> <p>from {from}</p></span>
-            {open && <div onClick={(e) => {
-                e.stopPropagation()
-                setOpen(false)
-            }} className="sheet"></div>}
-            <DefaultModal open={open} setOpen={setOpen} title={`Join request for ${projectData.joining}`} buttons={button}/>
-        </div>
+        inboxCard
      );
 }
  

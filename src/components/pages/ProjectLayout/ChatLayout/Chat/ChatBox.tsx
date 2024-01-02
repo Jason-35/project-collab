@@ -1,85 +1,26 @@
+import { useParams } from "react-router-dom";
 import "./ChatBox.css"
-// import TextBox from "./TextBox";
+import { query, collection, DocumentData, orderBy } from "firebase/firestore";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import { db } from "../../../../../firebase/firebase";
+
+
 
 const ChatBox = () => {
+
+    const {uuid} = useParams()
+    
+    const messageRef = query(collection(db, "messages"), orderBy("createdAt"))
+    const [messages] = useCollectionData(messageRef)
+
+
     return ( 
     <div className="chat-box">
             <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
+                {(messages && messages.length > 0) && messages?.filter((obj) => obj.projId === uuid).map((msg: DocumentData) => (
+                    <p><span>{msg.sender}:</span> {msg.message}</p>
+                ))}
             </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur distinctio quisquam laborum tenetur adipisci obcaecati numquam ipsam ratione incidunt esse fugiat, perspiciatis omnis facere doloribus error ut quasi quis nemo!</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur distinctio quisquam laborum tenetur adipisci obcaecati numquam ipsam ratione incidunt esse fugiat, perspiciatis omnis facere doloribus error ut quasi quis nemo!</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur distinctio quisquam laborum tenetur adipisci obcaecati numquam ipsam ratione incidunt esse fugiat, perspiciatis omnis facere doloribus error ut quasi quis nemo!</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            <div className="chat-msg">
-                <p><span>John Doe:</span> OMG HELLO WORLD</p> 
-            </div>
-            
     </div>
     );
 }

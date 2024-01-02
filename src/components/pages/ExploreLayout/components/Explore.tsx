@@ -33,7 +33,6 @@ const Explore = () => {
     }, [])
 
     const handleRequest = async() => {
-        console.log("hanmdle request")
         const createdAt = new Date()
         const currentUserName = getCurrentDisplayName()
         const userId = getCurrentUserUid()

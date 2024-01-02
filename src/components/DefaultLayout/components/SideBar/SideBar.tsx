@@ -84,7 +84,10 @@ const SideBar = () => {
             ownerId: userId,
             url: formData.url,
             projectData: formData,
-            members: [userDisplayName],
+            members: [{
+                user: userDisplayName,
+                userId: userId,
+            }],
             createdAt: serverTimestamp()
         });
         

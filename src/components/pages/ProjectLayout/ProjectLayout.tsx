@@ -5,8 +5,17 @@ import ChatLayout from "./ChatLayout/ChatLayout";
 import Features from "./Features/Features";
 import Logs from "./Logs/Logs";
 import "./ProjectLayout.css"
+import { auth } from "../../../firebase/firebase";
+import { useNavigate } from "react-router-dom";
 
 const ProjectLayout = () => {
+    const navigate = useNavigate()
+    
+    auth.onAuthStateChanged((user) => {
+        if(!user){
+            navigate("/login")
+        }
+    })
     
     const layout = (
         <div className="project-layout flex-1">

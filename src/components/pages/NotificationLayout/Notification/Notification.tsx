@@ -55,8 +55,6 @@ const Notification = () => {
                 }))
 
                 NotificationWithDate.sort(sortByCreated)
-                
-                console.log(NotificationWithDate)
 
                 setMessages(NotificationWithDate)
             }
@@ -73,7 +71,7 @@ const Notification = () => {
                 <div className="divider-nm" />
                 <div className="inbox">
                     {messages && messages.length > 0 && messages.map((msg, index) => (
-                        <InboxCard key={index} title={`Join request for ${msg.joining}`} from={msg.from} projectData={msg}/>
+                        <InboxCard key={index} title={`${msg.message}`} from={msg.from} projectData={msg}/>
                     ))}
                 </div>
             </div>
