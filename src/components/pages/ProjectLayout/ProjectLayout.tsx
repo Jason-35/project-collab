@@ -7,9 +7,12 @@ import Logs from "./Logs/Logs";
 import "./ProjectLayout.css"
 import { auth } from "../../../firebase/firebase";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const ProjectLayout = () => {
     const navigate = useNavigate()
+
+    const [rerender, setRerender] = useState(false)
     
     auth.onAuthStateChanged((user) => {
         if(!user){
@@ -21,7 +24,7 @@ const ProjectLayout = () => {
         <div className="project-layout flex-1">
             <div className="project-left-column">
                 <Guideline />
-                <Features />
+                <Features rerender={rerender} setRerender={setRerender} />
                 <Logs />
                 <Assignment />
             </div>

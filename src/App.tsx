@@ -6,7 +6,6 @@ import Login from './components/pages/LoginPage/Login';
 import HomeLayout from './components/pages/HomeLayout/HomeLayout';
 import { SidebarProvider } from './context/SidebarContext';
 // import Explore from './components/page/Explore';
-import Issues from './components/page/Issues';
 import ProfileSetup from './components/pages/ProfileSetup/ProfileSetup';
 import ProjectLayout from './components/pages/ProjectLayout/ProjectLayout';
 // import Notification from './components/page/Notification';
@@ -25,7 +24,6 @@ function App() {
           <Route path='/home' element={<HomeLayout/>} />
           <Route path='/login' element={<Login />} />
           <Route path='/explore' element={<ExploreLayout />} />
-          <Route path='/issues' element={<Issues />} />
           <Route path='/project/:uuid' element={<ProjectLayout />} />
           <Route path='/notifications' element={<NotificationLayout />}/>
         </Routes>

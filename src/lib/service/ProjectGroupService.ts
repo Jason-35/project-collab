@@ -27,3 +27,55 @@ export const getCurrentProject = async(docId: string) => {
         console.log(error)
     }
 }
+
+export const getProjectFeature = async(docId: string) => {
+    const featureDocRef = doc(db, "projectGroup", docId)
+    try {
+        // const features: FeatureFields[] = []
+        const featureDocuments = (await getDoc(featureDocRef))
+        if(featureDocuments){
+            const featureData = featureDocuments.data()
+            if(featureData){
+                const featureArray = featureData.features
+                if(featureArray){
+                    console.log(featureArray)
+                    return featureArray   
+                }
+            }
+        }
+
+        return []
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+interface date {
+    seconds: number;
+    nanoseconds: number
+}
+
+export const getLogs = async(docId: string) => {
+    const logRef = doc(db, "projectGroup", docId)
+    try {
+        const logDoc = await getDoc(logRef)
+        if(logDoc){
+            const logData = logDoc.data()
+            if(logData){
+                const logArray = logData.logs
+                if(logArray){
+                    const sortedArray = logArray.sort((a: date, b: date) => {
+                        const timestampA = a.seconds * 1e9 + a.nanoseconds;
+                        const timestampB = b.seconds * 1e9 + b.nanoseconds;
+                        return timestampA - timestampB;
+                    })
+                    return sortedArray
+                }
+            }
+        }
+        return []
+    } catch (error) {
+        console.log(error)
+    }
+}

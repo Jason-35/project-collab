@@ -1,8 +1,8 @@
-.bugs-component {
+/* .bugs-component {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* outline: solid red 3px; */
+    outline: solid red 3px;
 }
 
 .bugs-container {
@@ -12,4 +12,24 @@
     min-width: 0;
     height: 95%;
     overflow: scroll;
+} */
+
+.guideline-text {
+    /* outline: solid 3px green; */
+    display: inline-block;
+    word-break: break-all;
+}
+
+.edit-btn {
+    position: absolute;
+    right: 1%;
+    top: 1.5%;
+    border: black 1px solid;
+    background-color: white;
+}
+
+.edit-btn:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
 }

@@ -11,6 +11,7 @@
     display: flex;
     flex-direction: column;
     padding: 20px;
+    z-index: 10;
 }
 
 .modal-header {
@@ -25,6 +26,7 @@
 .modal-header h1 {
     width: 90%;
     /* outline: solid 3px black; */
+    margin-right: 2rem;
     text-decoration: underline;
     white-space: nowrap;
     flex-wrap: wrap;

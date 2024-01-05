@@ -42,3 +42,14 @@
 
     /* width: 20%; */
 }
+
+.no-hover:hover {
+    cursor: default;
+}
+
+.desc {
+    outline: solid black 2px;
+    height: 300px;
+    width: 300px;
+    overflow: scroll;
+}

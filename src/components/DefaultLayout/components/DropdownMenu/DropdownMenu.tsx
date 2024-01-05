@@ -8,7 +8,8 @@ interface FormData {
     tags: string[];
     description: string;
     url: string;
-    max: number
+    max: number,
+    repository: string
 }
 
 
@@ -36,7 +37,6 @@ const DropdownMenu = ({ items, selected, setSelected, setForm, formData }:Dropdo
     }
 
     const handleClickCarrot = () => {
-        console.log("hiya")
         setDisplay((prev) => !prev)
     }
 

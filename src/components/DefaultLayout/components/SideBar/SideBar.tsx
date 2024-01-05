@@ -25,7 +25,9 @@ interface FormData {
     tags: string[];
     description: string;
     url: string;
-    max: number
+    max: number;
+    repository: string;
+
 }
 
 
@@ -43,7 +45,8 @@ const SideBar = () => {
         tags: [],
         description: '',
         url: '',
-        max: 1
+        max: 1,
+        repository: '',
       });
 
     const navigate = useNavigate()
@@ -104,7 +107,8 @@ const SideBar = () => {
             tags: [],
             description: '',
             url: '',
-            max: 1
+            max: 1,
+            repository: '',
           })
 
         navigate(`${formData.url}`)
@@ -147,6 +151,10 @@ const SideBar = () => {
             <div className="form-center">
                 <label>Descriptions</label> <br />
                 <textarea name="" id="" cols={40} rows={5} onChange={(e) => setFormData({...formData, ["description"]: e.target.value})}></textarea>
+            </div>
+            <div className="form-center">
+                <label>repository</label> <br />
+                <textarea name="" id="" cols={40} rows={1} onChange={(e) => setFormData({...formData, ["repository"]: e.target.value})}></textarea>
             </div>
             <div className="form-center">
                 <label>Tags</label> <br />

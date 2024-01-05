@@ -3,8 +3,8 @@ import DefaultLayout from "../../DefaultLayout/DefaultLayout";
 import { auth } from "../../../firebase/firebase";
 import { useState } from "react";
 import Recommendation from "./components/Recommendation/Recommendation";
-import Bugs from "./components/Bugs/Bugs";
-import Assignments from "./components/Assignments/Assignments";
+// import Bugs from "./components/Bugs/Bugs";
+// import Assignments from "./components/Assignments/Assignments";
 import "./HomeLayout.css"
 
 
@@ -37,10 +37,10 @@ const HomeLayout = () => {
                 <div className="home-right-layout">
                     <Recommendation />
                 </div>
-                <div className="home-left-layout">
+                {/* <div className="home-left-layout">
                     <Bugs />
                     <Assignments />
-                </div>
+                </div> */}
             </div>
         )
     }
