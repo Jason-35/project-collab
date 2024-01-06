@@ -1,13 +1,14 @@
+// import { v4 as uuid } from "uuid";
+import { v4 as featureId } from "uuid"
 import ServiceCard from "../HelperComponent/ServiceComponent/ServiceCard";
 import Headings from "../HelperComponent/headings/Headings";
 import "./Features.css"
 import "../HelperComponent/common.css"
 import DefaultModal from "../../../DefaultLayout/components/Modal/DefaultModal";
 import { useEffect, useState } from "react";
-import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import { db } from "../../../../firebase/firebase";
-import { getProjectFeature } from "../../../../lib/service/ProjectGroupService";
 import { getCurrentDisplayName } from "../../../../lib/service/UserService";
 
 interface FeatureFields {
@@ -17,46 +18,66 @@ interface FeatureFields {
         seconds: number;
         nanoseconds: number;
     }
-    assigned: string
+    assigned: string;
+    id: string
+}
+
+interface renderingProps {
+    rerender: boolean
+    setRerender: React.Dispatch<React.SetStateAction<boolean>>
+    updatedAssignment: boolean
+    setUpdatedAssignment: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 
-const Features = ({rerender, setRerender}:{rerender: boolean, setRerender: React.Dispatch<React.SetStateAction<boolean>>}) => {
+const Features = ({rerender, setRerender, setUpdatedAssignment, updatedAssignment}:renderingProps) => {
 
     const [open, setOpen] = useState(false)
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
     const { uuid } = useParams()
     const [features, setFeatures] = useState<FeatureFields[]>([])
-    // const [rerender, setRerender] = useState(false)
+    const [adding, setAdding] = useState(false)
+
+
+
+    // unsub();
 
     useEffect(() => {
-        const getFeatures = async() => {
-            const featureItem = await getProjectFeature(String(uuid))
+
+        onSnapshot(doc(db, "projectGroup", String(uuid)) , (doc) => {
+            // console.log("yo")
+            const featureItem = doc.data()?.features
             if(featureItem){
-                // prevents the infinite rerendering
-                if(features && (features.length !== featureItem.length)){
+                if(features && features.length !== featureItem.length){
                     setFeatures(featureItem)
-                    setName("")
-                    setDescription("")
+                }
+                if(updatedAssignment){
+                    setFeatures(featureItem)
+                    setUpdatedAssignment(false)
                 }
             }
-        }
+            
 
-        getFeatures()
-    })
+        })
+       
+    }, [adding, features, rerender, setUpdatedAssignment, updatedAssignment, uuid])
 
     const handleAdd = async() => {
+        setAdding(true)
+        const FeatureId = featureId()
         const createdAt = new Date()
         const user = getCurrentDisplayName()
         await updateDoc(doc(db, "projectGroup", String(uuid)), {
             features: arrayUnion({
+                id: FeatureId,
                 name: name,
                 description: description,
                 createdAt: createdAt,
                 assigned: ""
             }),
             logs: arrayUnion({
+                id: FeatureId,
                 user: user,
                 task: name,
                 action: `Added feature ${name}`,
@@ -64,6 +85,8 @@ const Features = ({rerender, setRerender}:{rerender: boolean, setRerender: React
             })
         })
         setOpen(false)
+        setRerender(!rerender)
+        setAdding(false)
     }
 
     const content = (
@@ -93,7 +116,7 @@ const Features = ({rerender, setRerender}:{rerender: boolean, setRerender: React
                 <Headings title="Features" />
                 <div className="cards no-scrollbar no-scroll">
                     {features && features.length > 0 && features.map((item, index) => (
-                        <ServiceCard rerender={rerender} setRerender={setRerender} index={index} features={features} type="feature" key={index} title={item.name} assigned={item.assigned} desc={item.description}/>
+                        <ServiceCard id={item.id} rerender={rerender} setRerender={setRerender} index={index} features={features} type="feature" key={index} title={item.name} assigned={item.assigned} desc={item.description}/>
                     ))}
                 </div>
                 <DefaultModal open={open} setOpen={setOpen} title="Add A Feature" buttons={button} content={content}/>

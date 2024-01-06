@@ -38,7 +38,7 @@ export const getProjectFeature = async(docId: string) => {
             if(featureData){
                 const featureArray = featureData.features
                 if(featureArray){
-                    console.log(featureArray)
+                    // console.log(featureArray)
                     return featureArray   
                 }
             }

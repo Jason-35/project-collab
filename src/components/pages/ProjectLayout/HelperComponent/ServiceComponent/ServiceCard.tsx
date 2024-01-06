@@ -5,6 +5,7 @@ import { getCurrentDisplayName } from "../../../../../lib/service/UserService";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import { db } from "../../../../../firebase/firebase";
+import { getProjectFeature } from "../../../../../lib/service/ProjectGroupService";
 
 
 interface FeatureFields {
@@ -14,7 +15,8 @@ interface FeatureFields {
         seconds: number;
         nanoseconds: number;
     }
-    assigned: string
+    assigned: string;
+    id: string
 }
 
 interface ServiceCardProps {
@@ -27,12 +29,17 @@ interface ServiceCardProps {
     index? : number;
     setRerender?: React.Dispatch<React.SetStateAction<boolean>>;
     rerender?: boolean
+    id: string;
+    setUpdatedAssignmet?: React.Dispatch<React.SetStateAction<boolean>>
+    setForce?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const ServiceCard = ({title, assigned, click=true, type, desc, index, features, rerender, setRerender}: ServiceCardProps) => {
+const ServiceCard = ({setForce, title, assigned, click=true, type, desc, index, features, rerender, setRerender, id, setUpdatedAssignmet}: ServiceCardProps) => {
 
     const { uuid } = useParams()
     const user = getCurrentDisplayName()
+
+    const [open, setOpen] = useState(false)
 
     const handleTakeAssignment = async() => {
         if(features){
@@ -54,6 +61,7 @@ const ServiceCard = ({title, assigned, click=true, type, desc, index, features, 
             if(setRerender){
                 setRerender(!rerender)
             }
+            if(setForce) setForce(true)
         }
     }
 
@@ -76,6 +84,48 @@ const ServiceCard = ({title, assigned, click=true, type, desc, index, features, 
                 setRerender(!rerender)
             }
         }
+    }
+
+    const handleDone = async(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.stopPropagation()
+        const createdAt = new Date()
+        const AllFeatures = await getProjectFeature(String(uuid))
+        const copyFeature = AllFeatures.filter((obj: FeatureFields) => obj.id !== id)
+        // console.log(copyFeature)
+        await updateDoc(doc(db, "projectGroup", String(uuid)), {
+            features: copyFeature,
+            logs: arrayUnion({
+                user: user,
+                task: title,
+                action: `Finished Feature ${title}`,
+                createdAt: createdAt,
+            })
+        })
+        if(setRerender){
+            setRerender(!rerender)
+        }
+        setOpen(false)
+    }
+
+    const handleForfeit = async(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.stopPropagation()
+        const createdAt = new Date()
+        const AllFeatures = await getProjectFeature(String(uuid))
+        const copyFeature = AllFeatures.map((obj: FeatureFields) => obj.id === id ? {...obj, ["assigned"]: ""} : obj)
+        await updateDoc(doc(db, "projectGroup", String(uuid)), {
+            features: copyFeature,
+            logs: arrayUnion({
+                user: user,
+                task: title,
+                action: `Forfeited Feature ${title}`,
+                createdAt: createdAt,
+            })
+        })
+        if(setRerender) setRerender(!rerender)
+        if(setUpdatedAssignmet){
+            setUpdatedAssignmet(true)
+        }
+        setOpen(false)
     }
 
     let content;
@@ -105,19 +155,22 @@ const ServiceCard = ({title, assigned, click=true, type, desc, index, features, 
             </div>
             )
     }else if(type === "assignment"){
+        button = (
+            <div>
+                <button onClick={handleDone}>Done</button>
+                <button onClick={handleForfeit}>Forfeit</button>
+            </div>
+        )
+
         content = (
             <div>
                 <p className="desc">{desc}</p>
             </div>
         )
     }
-    
-
-    const [open, setOpen] = useState(false)
 
     const clickService = click ? (
         <div className="service-card" onClick={(e) => {
-            // handleOnClick(cardProp)
             e.stopPropagation()
             setOpen(true)
         }}>

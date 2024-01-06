@@ -4,7 +4,8 @@ import "./Logs.css"
 import "../HelperComponent/common.css"
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getLogs } from "../../../../lib/service/ProjectGroupService";
+import { onSnapshot, doc } from "firebase/firestore";
+import { db } from "../../../../firebase/firebase";
 
 interface log {
     task: string;
@@ -18,14 +19,12 @@ const Logs = () => {
     const [logs, setLogs] = useState([])
 
     useEffect(() => {
-        const getLog = async() =>{
-            const logsArray = await getLogs(String(uuid))
-            if(logsArray.length !== logs.length){
-                setLogs(logsArray)
+        onSnapshot(doc(db, "projectGroup", String(uuid)) , (doc) => {
+            const logArray = doc.data()?.logs
+            if(logArray.length !== logs.length){
+                setLogs(logArray)
             }
-        } 
-
-        getLog()
+        })
     })
 
     return ( 
@@ -34,7 +33,7 @@ const Logs = () => {
                 <Headings title="Logs"/>
                 <div className="cards no-scrollbar no-scroll">
                     {logs && logs.length > 0 && logs.map((log: log, index) => (
-                        <ServiceCard key={index} type="logs" title={log.task} assigned={`${log.user} ${log.action}`} click={false}/>
+                        <ServiceCard id="" key={index} type="logs" title={log.task} assigned={`${log.user} ${log.action}`} click={false}/>
                     ))}
                 </div>
             </div>

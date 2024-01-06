@@ -16,14 +16,22 @@ interface FeatureFields {
         seconds: number;
         nanoseconds: number;
     }
-    assigned: string
+    assigned: string;
+    id: string
+}
+
+interface renderingProps {
+    rerender: boolean
+    setRerender: React.Dispatch<React.SetStateAction<boolean>>
+    updatedAssignment: boolean
+    setUpdatedAssignment: React.Dispatch<React.SetStateAction<boolean>>
+    setForce?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 
-const Assignment = () => {
-
+const Assignment = ({rerender, setRerender, setUpdatedAssignment, setForce}: renderingProps) => {
+    
     const { uuid } = useParams()
-
     const [assignments, setAssignment] = useState([])
 
     useEffect(() => {
@@ -46,7 +54,7 @@ const Assignment = () => {
                 <Headings title="Assignments"/>
                 <div className="cards no-scrollbar no-scroll">
                     {assignments && assignments.length > 0 && assignments.map((task: FeatureFields, index) => (
-                        <ServiceCard desc={task.description} key={index} type="assignment" title={task.name} assigned={task.assigned}/>
+                        <ServiceCard setForce={setForce} setUpdatedAssignmet={setUpdatedAssignment} rerender={rerender} setRerender={setRerender} id={task.id} desc={task.description} key={index} type="assignment" title={task.name} assigned={task.assigned}/>
                     ))}
                 </div>
             </div>

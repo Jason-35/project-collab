@@ -11,9 +11,11 @@ import { useState } from "react";
 
 const ProjectLayout = () => {
     const navigate = useNavigate()
-
     const [rerender, setRerender] = useState(false)
+    const [updatedAssignment, setUpdatedAssignment] = useState(false)
+
     
+
     auth.onAuthStateChanged((user) => {
         if(!user){
             navigate("/login")
@@ -24,9 +26,9 @@ const ProjectLayout = () => {
         <div className="project-layout flex-1">
             <div className="project-left-column">
                 <Guideline />
-                <Features rerender={rerender} setRerender={setRerender} />
+                <Features rerender={rerender} setRerender={setRerender} updatedAssignment={updatedAssignment} setUpdatedAssignment={setUpdatedAssignment} />
                 <Logs />
-                <Assignment />
+                <Assignment rerender={rerender} setRerender={setRerender} updatedAssignment={updatedAssignment} setUpdatedAssignment={setUpdatedAssignment}/>
             </div>
             <div className="project-right-column">
                 <ChatLayout />

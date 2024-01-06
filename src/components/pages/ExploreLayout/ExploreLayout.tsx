@@ -1,6 +1,6 @@
 import DefaultLayout from "../../DefaultLayout/DefaultLayout";
 import Explore from "./components/Explore";
-import SearchBar from "./components/SearchBar";
+// import SearchBar from "./components/SearchBar";
 import "./ExploreLayout.css"
 
 const ExploreLayout = () => {
@@ -8,7 +8,7 @@ const ExploreLayout = () => {
 
     const layout = (
     <div className="explore-layout">
-        <SearchBar />
+        {/* <SearchBar /> */}
         <Explore />
     </div>
     )

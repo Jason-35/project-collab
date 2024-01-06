@@ -17,8 +17,8 @@ const ChatBox = () => {
     return ( 
     <div className="chat-box">
             <div className="chat-msg">
-                {(messages && messages.length > 0) && messages?.filter((obj) => obj.projId === uuid).map((msg: DocumentData) => (
-                    <p><span>{msg.sender}:</span> {msg.message}</p>
+                {(messages && messages.length > 0) && messages?.filter((obj) => obj.projId === uuid).map((msg: DocumentData, index) => (
+                    <p key={index}><span>{msg.sender}:</span> {msg.message}</p>
                 ))}
             </div>
     </div>
