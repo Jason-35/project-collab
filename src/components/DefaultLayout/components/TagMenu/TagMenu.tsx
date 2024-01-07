@@ -18,13 +18,10 @@ const TagMenu = ({ items, tags, setTags }:TagMenuProps) => {
         if(e.currentTarget.textContent){
             const selectedTag = e.currentTarget.textContent
             if(tags.includes(selectedTag)){
-                console.log("includes")
                 setTags((prev) => prev.filter((item) => item !== selectedTag))
             }else{
-                console.log("adding")
                 setTags((prev) => [...prev, selectedTag])
             }
-            // console.log(tags)
         }
     }
 

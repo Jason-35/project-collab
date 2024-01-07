@@ -1,5 +1,4 @@
 .sidebar-container {
-    /* outline: solid 3px red; */
     background-color: whitesmoke;
     z-index: 5;
     height: 100%;
@@ -111,7 +110,6 @@
 /* Fix this another time */
 
 .group-section {
-    /* outline: solid green 3px; */
     list-style: none;
     height: 60%;
     display: flex;
@@ -129,7 +127,6 @@
     margin-right: auto;
     width: 80%;
     padding-left: 3px;
-    /* border: solid black 1px; */
 }
 
 .group-section li span:hover {
@@ -139,7 +136,6 @@
 
 .group-project-header {
     text-decoration: underline;
-    /* outline: solid brown 3px; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -162,23 +158,14 @@
 .form-center {
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
-    /* outline: solid 3px rebeccapurple; */
     width: 90%;
 
 }
 
 .content-container {
-    /* outline: solid 3px blue; */
     display: flex;
     flex-direction: column;
     height: 100%;
     align-items: center;
     justify-content: space-evenly;
-}
-
-.level-size {
-    /* outline: solid 3px blue; */
-    display: flex;
-    justify-content: space-between;
 }

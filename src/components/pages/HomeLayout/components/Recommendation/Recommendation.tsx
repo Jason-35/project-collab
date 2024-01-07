@@ -7,12 +7,9 @@ import { DocumentData } from "firebase/firestore";
 const Recommendation = () => {
     const [recommend, setRecommend] = useState<DocumentData[]>([])
     useEffect(() => {
-        console.log()
         const getRecommendedProjects = async() =>{
             const projects = await getAllProjectGroups()
             const userLevel = await getCurrentUserDocument()
-            console.log(userLevel?.level)
-            console.log(projects)
             if(userLevel && projects){
                 const filteredProject = projects.filter((proj) => proj.projectData.level === userLevel.level)
                 if(recommend.length !== filteredProject.length){

@@ -53,7 +53,6 @@ const SideBar = () => {
     const navigate = useNavigate()
 
     useEffect(()=>{
-        console.log("reloads")
         const fetchProjects = async() =>{
             const currentUser = await getCurrentUserDocument()
             if(currentUser && currentUser.memberOfProject.length > 0){
@@ -117,7 +116,6 @@ const SideBar = () => {
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(e.target.value)
         const value = Number(e.target.value)
         if (value && value >= 1){
             setSize(value)
@@ -218,7 +216,6 @@ const SideBar = () => {
                         {listProj && (listProj.length > 0) && listProj.map((proj) => (
                             <li>
                                 <span onClick={() => {
-                                    console.log(proj.projectUrl)
                                     navigate(proj.projectUrl)
                                     setOpenSidebar(false)
                                 }}>

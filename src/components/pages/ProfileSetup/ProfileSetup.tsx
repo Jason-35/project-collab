@@ -93,7 +93,6 @@ const ProfileSetup = () => {
     }
 
     const handleBio = () => {
-        console.log(bioText)
         if(bio.current){
             bio.current.className = bio.current.className + " slide-out"
             setTimeout(() => {

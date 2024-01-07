@@ -8,7 +8,6 @@ const Members = () => {
     const { uuid } = useParams()
     const [members, setMembers] = useState([])
     useEffect(() => {
-        console.log(uuid)
         const getMembers = async() => {
             if(uuid){
                 const projectDoc = await getCurrentProject(uuid)
@@ -20,7 +19,6 @@ const Members = () => {
         getMembers()
     }, [uuid, members.length])
 
-    console.log(members)
     return ( 
         <div className="members-container">
             {members && members.length > 0 && members.map((member, index) => (

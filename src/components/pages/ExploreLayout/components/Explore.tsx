@@ -106,10 +106,10 @@ const Explore = () => {
                 <button>Next</button>
             </div> */}
             {/*  */}
-            <div className='pagination first-last'>
-                {/* <button>Prev</button> */}
+            {/* <div className='pagination first-last'>
+                <button>Prev</button>
                 <button>Next</button>
-            </div>
+            </div> */}
         </div>
      );
 }
