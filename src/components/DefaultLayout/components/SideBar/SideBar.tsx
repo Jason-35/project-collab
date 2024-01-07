@@ -13,6 +13,7 @@ import TagMenu from "../TagMenu/TagMenu";
 import { setDoc, doc, serverTimestamp, arrayUnion } from "firebase/firestore";
 import { v4 as uuid } from "uuid";
 import { db } from "../../../../firebase/firebase";
+import jsonData from "../../../../assets/skills.json"
 
 interface projObject {
     projectName: string,
@@ -143,7 +144,7 @@ const SideBar = () => {
                         <DropdownMenu formData={formData} setForm={setFormData} selected={experience} setSelected={setExperience} items={["beginner","intermediate","expert"]}/>
                     </div>
                     <div className="size">
-                        <label>Size</label> <br />
+                        <label>Size</label> <br/>
                         <input type="number" value={size} onChange={handleInputChange}/>
                     </div>
                 </div>
@@ -158,7 +159,7 @@ const SideBar = () => {
             </div>
             <div className="form-center">
                 <label>Tags</label> <br />
-                <TagMenu items={["java", "python"]} tags={tags} setTags={setTags} />
+                <TagMenu items={jsonData} tags={tags} setTags={setTags} />
             </div>
         </form>
     )

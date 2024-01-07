@@ -1,103 +1,60 @@
+import { useEffect, useState } from "react";
 import "./Recommendation.css"
+import { getAllProjectGroups } from "../../../../../lib/service/ProjectGroupService";
+import { getCurrentUserDocument } from "../../../../../lib/service/UserService";
+import { DocumentData } from "firebase/firestore";
 
 const Recommendation = () => {
+    const [recommend, setRecommend] = useState<DocumentData[]>([])
+    useEffect(() => {
+        console.log()
+        const getRecommendedProjects = async() =>{
+            const projects = await getAllProjectGroups()
+            const userLevel = await getCurrentUserDocument()
+            console.log(userLevel?.level)
+            console.log(projects)
+            if(userLevel && projects){
+                const filteredProject = projects.filter((proj) => proj.projectData.level === userLevel.level)
+                if(recommend.length !== filteredProject.length){
+                    setRecommend(filteredProject)
+                }
+            }
+
+        } 
+
+        getRecommendedProjects()
+    })
+
     return ( 
         <div className="recommendation-component">
             <h1>Recommendation</h1>
             <div className="divider" />
             <div className="recommendation-card-container no-scroll">
-                <div className="recommendation-card">
+                {recommend && recommend.length > 0 && recommend.map((proj, index) => (
+                <div key={index} className="recommendation-card">
                     <div className="recommendation-header">
-                        <h2 className="header-title">Awsome Project! long title</h2>
-                        <h3>owner: john doe</h3>
-                        <h3>0 / 5</h3>
+                        <h2 className="header-title">{proj.projectData.projectName}</h2>
+                        <h3>owner: {proj.owner}</h3>
+                        <h3>{proj.projectData.tags.length} / {proj.projectData.max}</h3>
                     </div>
                     <div className="divider" / >
                     <div>
                         <div className="description-container">
                             <div className="description">
-                                <p>This is an awsome project</p>
+                                <p>{proj.projectData.description}</p>
                             </div>
                         </div>
                         <div className="skills-container">
                             <div className="skills">
-                                <p>react</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
+                                {proj.projectData.tags.map((tag:string, index:number) => (
+                                    <p key={index}>{tag}</p>
+                                ))}
                             </div>
                         </div>
                     </div>
                 </div>
+                ))}
                 {/*  */}
-                <div className="recommendation-card">
-                    <div className="recommendation-header">
-                        <h2 className="header-title">Awsome Project! long title</h2>
-                        <h3>owner: john doe</h3>
-                        <h3>0 / 5</h3>
-                    </div>
-                    <div className="divider" / >
-                    <div>
-                        <div className="description-container">
-                            <div className="description">
-                                <p>This is an awsome project</p>
-                            </div>
-                        </div>
-                        <div className="skills-container">
-                            <div className="skills">
-                                <p>react</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {/*  */}
-                <div className="recommendation-card">
-                    <div className="recommendation-header">
-                        <h2 className="header-title">Awsome Project! long title</h2>
-                        <h3>owner: john doe</h3>
-                        <h3>0 / 5</h3>
-                    </div>
-                    <div className="divider" / >
-                    <div>
-                        <div className="description-container">
-                            <div className="description">
-                                <p>This is an awsome project</p>
-                            </div>
-                        </div>
-                        <div className="skills-container">
-                            <div className="skills">
-                                <p>react</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                                <p>node</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
      );

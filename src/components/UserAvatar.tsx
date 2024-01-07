@@ -5,8 +5,12 @@ import { CircleUser, LogOut } from "lucide-react";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import { getCurrentUserDocument } from "../lib/service/UserService";
+import { useNavigate } from "react-router-dom";
 
 const UserAvatar = ({width, height} : {width: number, height: number}) => {
+
+    const navigate = useNavigate()
+
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [imgUrl, setImgUrl] = useState("")
     const open = Boolean(anchorEl);
@@ -51,7 +55,7 @@ const UserAvatar = ({width, height} : {width: number, height: number}) => {
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
         >
-            <MenuItem onClick={() => {console.log("profile")}}>
+            <MenuItem onClick={() => navigate("/profile")}>
                <ListItemIcon>
                     <CircleUser />
                 </ListItemIcon> 

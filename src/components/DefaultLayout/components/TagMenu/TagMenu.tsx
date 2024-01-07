@@ -1,8 +1,12 @@
 import { useState } from "react";
 import "./TagMenu.css"
 
+interface TagObject {
+    label: string
+}
+
 interface TagMenuProps {
-    items?: Array<string>;
+    items?: Array<TagObject>;
     tags: Array<string>;
     setTags: React.Dispatch<React.SetStateAction<string[]>>
 }
@@ -41,7 +45,7 @@ const TagMenu = ({ items, tags, setTags }:TagMenuProps) => {
             {display && 
             <ul className="dropdown-selection-menu">
                 {items && items.length > 0 && items.map((item, index) => (
-                    <li onClick={handleSelected} key={index}>{item}</li>
+                    <li onClick={handleSelected} key={index}>{item.label}</li>
                 ))}
             </ul>
             }

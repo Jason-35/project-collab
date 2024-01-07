@@ -1,11 +1,12 @@
 .sidebar-container {
+    /* outline: solid 3px red; */
     background-color: whitesmoke;
     z-index: 5;
     height: 100%;
     width: 75%;
     top: 0;
     left: 0;
-    position: absolute;
+    position: fixed;
     animation-name: slideIn;
     animation-timing-function: ease;
     animation-duration: 0.4s;
@@ -20,7 +21,7 @@
 }
 
 .transparent-sheet {
-    position: absolute;
+    position: fixed;
     height: 100%;
     width: 100%;
     top: 0;

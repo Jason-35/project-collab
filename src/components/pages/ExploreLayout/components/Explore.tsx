@@ -69,9 +69,14 @@ const Explore = () => {
             {projects && projects.map((proj: DocumentData, index:number) => (
                 <div key={index} className="explore-card" onClick={() => handleModal(proj)}>
                     <div className="explore-recommendation-header">
-                        <h2 className="explore-header-title">{proj.projectData.projectName}</h2>
-                        <h3>owner: {proj.owner}</h3>
-                        <h3>{proj.members.length} / {proj.projectData.max}</h3>
+                        <div className='item1'>
+                            <h2 className="explore-header-title">{proj.projectData.projectName}</h2>
+                            <h3>owner: {proj.owner}</h3>
+                            <h3>{proj.members.length} / {proj.projectData.max}</h3>
+                        </div>
+                        <div className='item2'>
+                            <h2>{proj.projectData.level}</h2>
+                        </div>
                     </div>
                     <div className="divider" / >
                     <div>

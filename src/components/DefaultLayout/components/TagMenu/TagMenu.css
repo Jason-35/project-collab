@@ -18,15 +18,18 @@
 
 
 .dropdown-selection-menu { 
-    outline: 2px solid rebeccapurple;
     border-left: solid black 1px;
     border-right: solid black 1px;
+    border-bottom: solid black 1px;
     position: absolute;
     padding: 0;
     background-color: white;
     margin: 0;
     /* width: inherit; */
     width: 100%;
+    /* min-height: 1px; */
+    height: 10rem;
+    overflow: scroll;
     list-style: none;
 }
 

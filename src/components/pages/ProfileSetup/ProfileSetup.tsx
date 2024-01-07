@@ -149,7 +149,6 @@ const ProfileSetup = () => {
 
     const handleRemoveSkill = (item: string) => {
         const skillIndex = skills.indexOf(item)
-        console.log(skillIndex, skills)
         skills.splice(skillIndex, 1)
         setSkills((prevSkill) => [...prevSkill])
     }

@@ -26,7 +26,14 @@
 }
 
 .explore-recommendation-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     padding-left: 3rem;
+}
+
+.item2 {
+    justify-self: end;
+    padding-right: 2rem;
 }
 
 .explore-description-container, .explore-skills-container {

@@ -1,0 +1,44 @@
+.profile-layout {
+    /* outline: solid 3px red; */
+    padding: 3rem;
+    flex: 1;
+    overflow: scroll;
+}
+
+.avatar-input {
+    /* outline: solid 3px blue; */
+    padding-left: 2.7rem;
+    padding-top: 2rem;
+}
+
+.level {
+    margin-top: 2rem;
+}
+
+.bio {
+    margin-top: 2rem;
+}
+
+.skills {
+    margin-top: 2rem;
+}
+
+.skill-container {
+    margin-top: 2rem;
+    outline: solid 3px black;
+    width: 30rem;
+    height: 20rem;
+    padding-left: 0.1rem;
+}
+
+.skill-container button {
+    border: solid 2px black;
+    margin-right: 0.5rem;
+    background-color: white;
+}
+
+.skill-container button:hover {
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
