@@ -142,7 +142,7 @@ const ProfileSetup = () => {
     }
 
     const handleSelectedSkill = (event: SyntheticEvent<Element, Event>, value: { label: string } | null): void => {
-        if(value?.label && !skills.includes(value.label)){
+        if(value?.label && !skills.includes(value.label) && event){
             setSkills((prevSkill) => [...prevSkill, value.label])
         }
     }

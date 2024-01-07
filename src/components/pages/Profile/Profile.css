@@ -42,3 +42,17 @@
     color: white;
     cursor: pointer;
 }
+
+.save-btn {
+    margin-top: 2rem;
+    background-color: white;
+    border: 2px solid black;
+    width: 5rem;
+    height: 2rem;
+}
+
+.save-btn:hover {
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
