@@ -4,7 +4,7 @@ import SheetComponent from "./SheetComponent";
 const Sidebar = () => {
     const { pathname } = useLocation()
     
-    const allowedPath = ["/dashboard"]
+    const allowedPath = ["/dashboard", "/explore"]
     
     const content = allowedPath.includes(pathname) ? <SheetComponent /> : <></>
 

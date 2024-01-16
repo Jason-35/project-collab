@@ -22,15 +22,17 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import { Label } from "@/components/ui/label"
 import { Eye, EyeOff } from "lucide-react"
 import { useShowPassword } from "@/hooks/useShowPassword"
 import { Link, useNavigate } from "react-router-dom"
-import { AuthType, OAuthType } from "@/constants/constants"
+import { AuthType, OAuthType, Status } from "@/constants/constants"
+import { useState } from "react"
+import { AlertDialog, AlertDialogContent, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogHeader, AlertDialogFooter } from "@/components/ui/alert-dialog"
  
 const Login = () => {
 
     const navigate = useNavigate()
+    const [status, setStatus ] = useState(Status.OK)
 
     const form = useForm<z.infer<typeof loginSchema>>({
         resolver: zodResolver(loginSchema),
@@ -45,6 +47,20 @@ const Login = () => {
 
     return (
         <div className="h-screen flex justify-center items-center">
+            <AlertDialog open={status === Status.ERROR ? true : false}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Invalid Credentials</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Please check that you have typed your email or password correctly
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogAction onClick={() => setStatus(Status.OK)}>OK</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
+
             <Card className="w-[450px] border-transparent lg:border-white md:border-white">
                 <CardHeader className="mb-2">
                     <CardTitle>Sign in to Proejct Collab</CardTitle>
@@ -52,7 +68,7 @@ const Login = () => {
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(handleAuthentication)} className="grid gap-4">
+                        <form onSubmit={form.handleSubmit((e) => handleAuthentication(e, navigate, setStatus))} className="grid gap-4">
                             <FormField name="email" render={({field}) => (
                                 <FormItem>
                                     <FormControl>
@@ -77,9 +93,10 @@ const Login = () => {
                             <Link to={"/register"}>Don't have an account?</Link>
                         </form>
                     </Form>
-                    <Separator className="my-4 " />
+                    <div className="flex items-center justify-between my-4">
+                        <Separator className="w-1/4"/> <p>OR CONTINUE WITH</p> <Separator className="w-1/4" />
+                    </div>
                     <div className="grid gap-4">
-                        <Label>Sign in with</Label>
                         <Button onClick={() => handleOAuthSignIn(OAuthType.Google, navigate)} className="flex gap-2"><img src={GLogo} className=""/> Google</Button>
                     </div>
                 </CardContent>
