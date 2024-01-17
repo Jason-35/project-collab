@@ -93,10 +93,18 @@ export const handleOAuthSignIn = async(value: OAuthType, navigate: NavigateFunct
     }
 } 
 
-export const Authorization = (navigate: NavigateFunction) => {
+export const Authorization = (setLoggedIn?: React.Dispatch<React.SetStateAction<boolean>>) => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
         if(!user){
-            navigate("/login")
+            if(setLoggedIn){
+                console.log("no user")
+                setLoggedIn(false)
+            }
+        }else{
+            if(setLoggedIn){
+                setLoggedIn(true)
+            }
+            console.log(user?.displayName)
         }
     })
     return unsubscribe

@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { handleAuthentication, handleOAuthSignIn, loginSchema } from "@/lib/helper/authentication"
 
-import GLogo from "../../../public/g.png"
+import GLogo from "../../assets/g.png"
 
 import {
     Card,
